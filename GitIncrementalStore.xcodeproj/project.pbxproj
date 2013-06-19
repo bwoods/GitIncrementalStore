@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */; };
 		E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A021770E78A00EE045E /* CoreGraphics.framework */; };
 		E8AB5A051770E78A00EE045E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A041770E78A00EE045E /* UIKit.framework */; };
@@ -20,11 +21,6 @@
 		E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */; };
 		E8AB5A2F1770E81700EE045E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8AB5A091770E78A00EE045E /* InfoPlist.strings */; };
 		E8AB5A351770EC5C00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
-		E8AB5A421770EC5C00EE045E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A191770E78A00EE045E /* XCTest.framework */; };
-		E8AB5A431770EC5C00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
-		E8AB5A441770EC5C00EE045E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A041770E78A00EE045E /* UIKit.framework */; };
-		E8AB5A471770EC5C00EE045E /* Libgit₂.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A341770EC5C00EE045E /* Libgit₂.a */; };
-		E8AB5A4F1770EC5C00EE045E /* Libgit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A4E1770EC5C00EE045E /* Libgit_Tests.m */; };
 		E8AB5D381770F14500EE045E /* attr.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5C661770F14500EE045E /* attr.c */; };
 		E8AB5D3A1770F14500EE045E /* attr_file.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5C681770F14500EE045E /* attr_file.c */; };
 		E8AB5D3C1770F14500EE045E /* blob.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5C6B1770F14500EE045E /* blob.c */; };
@@ -124,7 +120,10 @@
 		E8AB5E0B1770F14500EE045E /* xprepare.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5D311770F14500EE045E /* xprepare.c */; };
 		E8AB5E0D1770F14500EE045E /* xutils.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5D341770F14500EE045E /* xutils.c */; };
 		E8AB5E131770F17700EE045E /* http_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E101770F17700EE045E /* http_parser.c */; };
-		E8AB5E191770F35500EE045E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
+		E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */; };
+		E8AB5E1E1770F8C800EE045E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E1D1770F8C800EE045E /* CoreData.framework */; };
+		E8AB5E1F1770F92000EE045E /* Libgit₂.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A341770EC5C00EE045E /* Libgit₂.a */; };
+		E8AB5E201770FC3500EE045E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,13 +133,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E8AB59FC1770E78A00EE045E;
 			remoteInfo = GitIncrementalStore;
-		};
-		E8AB5A451770EC5C00EE045E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8AB59F51770E78A00EE045E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E8AB5A331770EC5C00EE045E;
-			remoteInfo = "Libgit₂";
 		};
 		E8AB5C1E1770ECF400EE045E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -180,8 +172,7 @@
 		E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GitIncrementalStoreTests-Info.plist"; path = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GitIncrementalStoreTests.m; sourceTree = "<group>"; };
 		E8AB5A341770EC5C00EE045E /* Libgit₂.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "Libgit₂.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8AB5A411770EC5C00EE045E /* Libgit₂Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Libgit₂Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8AB5A4E1770EC5C00EE045E /* Libgit_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Libgit_Tests.m; sourceTree = "<group>"; };
+		E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Libgit₂Tests.m"; path = "../Libgit₂Tests/Libgit₂Tests.m"; sourceTree = "<group>"; };
 		E8AB5C661770F14500EE045E /* attr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr.c; sourceTree = "<group>"; };
 		E8AB5C671770F14500EE045E /* attr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attr.h; sourceTree = "<group>"; };
 		E8AB5C681770F14500EE045E /* attr_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr_file.c; sourceTree = "<group>"; };
@@ -365,8 +356,10 @@
 		E8AB5D351770F14500EE045E /* xutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xutils.h; sourceTree = "<group>"; };
 		E8AB5E101770F17700EE045E /* http_parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = http_parser.c; sourceTree = "<group>"; };
 		E8AB5E111770F17700EE045E /* http_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http_parser.h; sourceTree = "<group>"; };
-		E8AB5E161770F2FE00EE045E /* Libgit₂Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Libgit₂Tests-Info.plist"; sourceTree = "<group>"; };
 		E8AB5E181770F35500EE045E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E8AB5E1A1770F8B200EE045E /* GitIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitIncrementalStore.h; sourceTree = "<group>"; };
+		E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitIncrementalStore.m; sourceTree = "<group>"; };
+		E8AB5E1D1770F8C800EE045E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,9 +367,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */,
 				E8AB5A051770E78A00EE045E /* UIKit.framework in Frameworks */,
 				E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */,
+				E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */,
+				E8AB5E1E1770F8C800EE045E /* CoreData.framework in Frameworks */,
+				E8AB5E1F1770F92000EE045E /* Libgit₂.a in Frameworks */,
+				E8AB5E201770FC3500EE045E /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,18 +394,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8AB5A3E1770EC5C00EE045E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E8AB5A421770EC5C00EE045E /* XCTest.framework in Frameworks */,
-				E8AB5A441770EC5C00EE045E /* UIKit.framework in Frameworks */,
-				E8AB5A431770EC5C00EE045E /* Foundation.framework in Frameworks */,
-				E8AB5A471770EC5C00EE045E /* Libgit₂.a in Frameworks */,
-				E8AB5E191770F35500EE045E /* libz.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -418,8 +402,7 @@
 			children = (
 				E8AB5A061770E78A00EE045E /* GitIncrementalStore */,
 				E8AB5A071770E78A00EE045E /* Supporting Files */,
-				E8AB5A1F1770E78A00EE045E /* GitIncrementalStoreTests */,
-				E8AB5A481770EC5C00EE045E /* Libgit₂Tests */,
+				E8AB5A1F1770E78A00EE045E /* Unit Tests */,
 				E8AB59FF1770E78A00EE045E /* Frameworks */,
 				E8AB59FE1770E78A00EE045E /* Products */,
 			);
@@ -431,7 +414,6 @@
 				E8AB59FD1770E78A00EE045E /* GitIncrementalStore.app */,
 				E8AB5A181770E78A00EE045E /* GitIncrementalStoreTests.xctest */,
 				E8AB5A341770EC5C00EE045E /* Libgit₂.a */,
-				E8AB5A411770EC5C00EE045E /* Libgit₂Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -439,6 +421,7 @@
 		E8AB59FF1770E78A00EE045E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8AB5E1D1770F8C800EE045E /* CoreData.framework */,
 				E8AB5A361770EC5C00EE045E /* Libgit₂ */,
 				E8AB5A001770E78A00EE045E /* Foundation.framework */,
 				E8AB5A021770E78A00EE045E /* CoreGraphics.framework */,
@@ -452,6 +435,8 @@
 		E8AB5A061770E78A00EE045E /* GitIncrementalStore */ = {
 			isa = PBXGroup;
 			children = (
+				E8AB5E1A1770F8B200EE045E /* GitIncrementalStore.h */,
+				E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */,
 			);
 			path = GitIncrementalStore;
 			sourceTree = "<group>";
@@ -471,12 +456,14 @@
 			path = GitIncrementalStore;
 			sourceTree = "<group>";
 		};
-		E8AB5A1F1770E78A00EE045E /* GitIncrementalStoreTests */ = {
+		E8AB5A1F1770E78A00EE045E /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */,
 				E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */,
+				E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */,
 			);
+			name = "Unit Tests";
 			path = GitIncrementalStoreTests;
 			sourceTree = "<group>";
 		};
@@ -487,15 +474,6 @@
 				E8AB5E0F1770F17700EE045E /* http-parser */,
 			);
 			path = "Libgit₂";
-			sourceTree = "<group>";
-		};
-		E8AB5A481770EC5C00EE045E /* Libgit₂Tests */ = {
-			isa = PBXGroup;
-			children = (
-				E8AB5E161770F2FE00EE045E /* Libgit₂Tests-Info.plist */,
-				E8AB5A4E1770EC5C00EE045E /* Libgit_Tests.m */,
-			);
-			path = "Libgit₂Tests";
 			sourceTree = "<group>";
 		};
 		E8AB5C631770F14500EE045E /* src */ = {
@@ -784,24 +762,6 @@
 			productReference = E8AB5A341770EC5C00EE045E /* Libgit₂.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		E8AB5A401770EC5C00EE045E /* Libgit₂Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E8AB5A531770EC5C00EE045E /* Build configuration list for PBXNativeTarget "Libgit₂Tests" */;
-			buildPhases = (
-				E8AB5A3D1770EC5C00EE045E /* Sources */,
-				E8AB5A3E1770EC5C00EE045E /* Frameworks */,
-				E8AB5A3F1770EC5C00EE045E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E8AB5A461770EC5C00EE045E /* PBXTargetDependency */,
-			);
-			name = "Libgit₂Tests";
-			productName = "Libgit₂Tests";
-			productReference = E8AB5A411770EC5C00EE045E /* Libgit₂Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -812,9 +772,6 @@
 				ORGANIZATIONNAME = "Bryan Woods";
 				TargetAttributes = {
 					E8AB5A171770E78A00EE045E = {
-						TestTargetID = E8AB59FC1770E78A00EE045E;
-					};
-					E8AB5A401770EC5C00EE045E = {
 						TestTargetID = E8AB59FC1770E78A00EE045E;
 					};
 				};
@@ -834,7 +791,6 @@
 				E8AB59FC1770E78A00EE045E /* GitIncrementalStore */,
 				E8AB5A331770EC5C00EE045E /* Libgit₂ */,
 				E8AB5A171770E78A00EE045E /* GitIncrementalStoreTests */,
-				E8AB5A401770EC5C00EE045E /* Libgit₂Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -857,13 +813,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8AB5A3F1770EC5C00EE045E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -871,6 +820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
 				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
 				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
 			);
@@ -880,6 +830,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
 				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -990,14 +941,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8AB5A3D1770EC5C00EE045E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E8AB5A4F1770EC5C00EE045E /* Libgit_Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1005,11 +948,6 @@
 			isa = PBXTargetDependency;
 			target = E8AB59FC1770E78A00EE045E /* GitIncrementalStore */;
 			targetProxy = E8AB5A1D1770E78A00EE045E /* PBXContainerItemProxy */;
-		};
-		E8AB5A461770EC5C00EE045E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E8AB5A331770EC5C00EE045E /* Libgit₂ */;
-			targetProxy = E8AB5A451770EC5C00EE045E /* PBXContainerItemProxy */;
 		};
 		E8AB5C1F1770ECF400EE045E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1110,6 +1048,7 @@
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1124,6 +1063,7 @@
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1145,6 +1085,7 @@
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1162,6 +1103,7 @@
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -1203,52 +1145,6 @@
 			};
 			name = Release;
 		};
-		E8AB5A541770EC5C00EE045E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GitIncrementalStore.app/GitIncrementalStore";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_ENABLE_MODULES = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
-				INFOPLIST_FILE = "Libgit₂Tests/Libgit₂Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/src\"";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		E8AB5A551770EC5C00EE045E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GitIncrementalStore.app/GitIncrementalStore";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CLANG_ENABLE_MODULES = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
-				INFOPLIST_FILE = "Libgit₂Tests/Libgit₂Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/src\"";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1284,15 +1180,6 @@
 			buildConfigurations = (
 				E8AB5A511770EC5C00EE045E /* Debug */,
 				E8AB5A521770EC5C00EE045E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E8AB5A531770EC5C00EE045E /* Build configuration list for PBXNativeTarget "Libgit₂Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E8AB5A541770EC5C00EE045E /* Debug */,
-				E8AB5A551770EC5C00EE045E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
