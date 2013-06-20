@@ -31,7 +31,7 @@
 
 - (void) setUp
 {
-	self.URL = [NSURL URLWithString:@"unittests.git" relativeToURL:[NSURL fileURLWithPath:NSTemporaryDirectory()]];
+	self.URL = [NSURL URLWithString:@"unit-testing.git" relativeToURL:[NSURL fileURLWithPath:NSTemporaryDirectory()]];
 	[[NSFileManager defaultManager] removeItemAtURL:self.URL error:nil];
 
     NSManagedObjectModel * model = [NSManagedObjectModel mergedModelFromBundles:nil];
