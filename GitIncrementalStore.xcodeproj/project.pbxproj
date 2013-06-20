@@ -172,7 +172,7 @@
 		E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GitIncrementalStoreTests-Info.plist"; path = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GitIncrementalStoreTests.m; sourceTree = "<group>"; };
 		E8AB5A341770EC5C00EE045E /* Libgit₂.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "Libgit₂.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Libgit₂Tests.m"; path = "../Libgit₂Tests/Libgit₂Tests.m"; sourceTree = "<group>"; };
+		E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Libgit₂Tests.m"; sourceTree = "<group>"; };
 		E8AB5C661770F14500EE045E /* attr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr.c; sourceTree = "<group>"; };
 		E8AB5C671770F14500EE045E /* attr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attr.h; sourceTree = "<group>"; };
 		E8AB5C681770F14500EE045E /* attr_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr_file.c; sourceTree = "<group>"; };
