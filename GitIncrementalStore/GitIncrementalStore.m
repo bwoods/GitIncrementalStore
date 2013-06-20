@@ -2,6 +2,8 @@
 //
 
 #import "GitIncrementalStore.h"
+
+#import "MsgPackSerialization.h"
 #import "git2.h"
 
 
@@ -31,15 +33,13 @@
 
 #pragma mark - NSPersistentStore methods
 
-static NSString * NSPersistentStoreMetadataFilename = @"incremental-store.json";
+static NSString * NSPersistentStoreMetadataFilename = @"incremental-store";
 
 - (void) setMetadata:(NSDictionary *)metadata
 {
 	NSURL * url = [self.URL URLByAppendingPathComponent:NSPersistentStoreMetadataFilename];
-	NSData * data = [NSJSONSerialization dataWithJSONObject:metadata options:NSJSONWritingPrettyPrinted error:nil];
-
+	NSData * data = [MsgPackSerialization dataWithJSONObject:metadata options:NSJSONWritingPrettyPrinted error:nil];
 	[data writeToURL:url atomically:YES];
-	[[NSFileManager defaultManager] setAttributes:@{ NSFileExtensionHidden : @YES } ofItemAtPath:url.path error:nil];
 }
 
 - (NSDictionary *) metadata
@@ -47,7 +47,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"incremental-store.json";
 	NSURL * url = [self.URL URLByAppendingPathComponent:NSPersistentStoreMetadataFilename];
 	NSData * data = [[NSData alloc] initWithContentsOfURL:url];
 	if (data != nil)
-		return [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+		return [MsgPackSerialization JSONObjectWithData:data options:0 error:nil];
 
 	// make an initial commit for this empty repository
 	git_treebuilder * empty;

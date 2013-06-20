@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E83FD04017739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E83FD04117739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; };
+		E83FD04217739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E83FD04317739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; };
+		E83FD04417739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E83FD04517739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; };
+		E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; };
+		E83FD04817739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E83FD04917739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; };
+		E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
 		E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */; };
 		E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A021770E78A00EE045E /* CoreGraphics.framework */; };
@@ -156,6 +167,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E83FD03A17739969007EA3A7 /* msgpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msgpack.h; path = MsgPack/src/msgpack.h; sourceTree = "<group>"; };
+		E83FD03B17739969007EA3A7 /* objectc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = objectc.c; path = MsgPack/src/objectc.c; sourceTree = "<group>"; };
+		E83FD03C17739969007EA3A7 /* unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unpack.c; path = MsgPack/src/unpack.c; sourceTree = "<group>"; };
+		E83FD03D17739969007EA3A7 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = MsgPack/src/version.c; sourceTree = "<group>"; };
+		E83FD03E17739969007EA3A7 /* vrefbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vrefbuffer.c; path = MsgPack/src/vrefbuffer.c; sourceTree = "<group>"; };
+		E83FD03F17739969007EA3A7 /* zone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zone.c; path = MsgPack/src/zone.c; sourceTree = "<group>"; };
+		E83FD04A1773998C007EA3A7 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = object.h; path = MsgPack/src/msgpack/object.h; sourceTree = "<group>"; };
+		E83FD04B1773998C007EA3A7 /* pack_define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pack_define.h; path = MsgPack/src/msgpack/pack_define.h; sourceTree = "<group>"; };
+		E83FD04C1773998C007EA3A7 /* pack_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pack_template.h; path = MsgPack/src/msgpack/pack_template.h; sourceTree = "<group>"; };
+		E83FD04D1773998C007EA3A7 /* pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pack.h; path = MsgPack/src/msgpack/pack.h; sourceTree = "<group>"; };
+		E83FD04E1773998C007EA3A7 /* sbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sbuffer.h; path = MsgPack/src/msgpack/sbuffer.h; sourceTree = "<group>"; };
+		E83FD04F1773998C007EA3A7 /* sysdep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sysdep.h; path = MsgPack/src/msgpack/sysdep.h; sourceTree = "<group>"; };
+		E83FD0501773998C007EA3A7 /* unpack_define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unpack_define.h; path = MsgPack/src/msgpack/unpack_define.h; sourceTree = "<group>"; };
+		E83FD0511773998C007EA3A7 /* unpack_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unpack_template.h; path = MsgPack/src/msgpack/unpack_template.h; sourceTree = "<group>"; };
+		E83FD0521773998C007EA3A7 /* unpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unpack.h; path = MsgPack/src/msgpack/unpack.h; sourceTree = "<group>"; };
+		E83FD0531773998C007EA3A7 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = version.h; path = MsgPack/src/msgpack/version.h; sourceTree = "<group>"; };
+		E83FD0541773998C007EA3A7 /* vrefbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vrefbuffer.h; path = MsgPack/src/msgpack/vrefbuffer.h; sourceTree = "<group>"; };
+		E83FD0551773998C007EA3A7 /* zbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zbuffer.h; path = MsgPack/src/msgpack/zbuffer.h; sourceTree = "<group>"; };
+		E83FD0561773998C007EA3A7 /* zone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zone.h; path = MsgPack/src/msgpack/zone.h; sourceTree = "<group>"; };
+		E83FD05817739C27007EA3A7 /* MsgPackSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgPackSerialization.h; sourceTree = "<group>"; };
+		E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MsgPackSerialization.mm; sourceTree = "<group>"; };
 		E8AB59FD1770E78A00EE045E /* GitIncrementalStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitIncrementalStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AB5A001770E78A00EE045E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E8AB5A021770E78A00EE045E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -397,6 +429,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E83FD0391773991C007EA3A7 /* MsgPack */ = {
+			isa = PBXGroup;
+			children = (
+				E83FD03A17739969007EA3A7 /* msgpack.h */,
+				E83FD03B17739969007EA3A7 /* objectc.c */,
+				E83FD03C17739969007EA3A7 /* unpack.c */,
+				E83FD03D17739969007EA3A7 /* version.c */,
+				E83FD03E17739969007EA3A7 /* vrefbuffer.c */,
+				E83FD03F17739969007EA3A7 /* zone.c */,
+				E83FD04A1773998C007EA3A7 /* object.h */,
+				E83FD04B1773998C007EA3A7 /* pack_define.h */,
+				E83FD04C1773998C007EA3A7 /* pack_template.h */,
+				E83FD04D1773998C007EA3A7 /* pack.h */,
+				E83FD04E1773998C007EA3A7 /* sbuffer.h */,
+				E83FD04F1773998C007EA3A7 /* sysdep.h */,
+				E83FD0501773998C007EA3A7 /* unpack_define.h */,
+				E83FD0511773998C007EA3A7 /* unpack_template.h */,
+				E83FD0521773998C007EA3A7 /* unpack.h */,
+				E83FD0531773998C007EA3A7 /* version.h */,
+				E83FD0541773998C007EA3A7 /* vrefbuffer.h */,
+				E83FD0551773998C007EA3A7 /* zbuffer.h */,
+				E83FD0561773998C007EA3A7 /* zone.h */,
+			);
+			name = MsgPack;
+			sourceTree = "<group>";
+		};
 		E8AB59F41770E78A00EE045E = {
 			isa = PBXGroup;
 			children = (
@@ -421,10 +479,11 @@
 		E8AB59FF1770E78A00EE045E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E8AB5E1D1770F8C800EE045E /* CoreData.framework */,
 				E8AB5A361770EC5C00EE045E /* Libgit₂ */,
+				E83FD0391773991C007EA3A7 /* MsgPack */,
 				E8AB5A001770E78A00EE045E /* Foundation.framework */,
 				E8AB5A021770E78A00EE045E /* CoreGraphics.framework */,
+				E8AB5E1D1770F8C800EE045E /* CoreData.framework */,
 				E8AB5A041770E78A00EE045E /* UIKit.framework */,
 				E8AB5A191770E78A00EE045E /* XCTest.framework */,
 				E8AB5E181770F35500EE045E /* libz.dylib */,
@@ -437,6 +496,8 @@
 			children = (
 				E8AB5E1A1770F8B200EE045E /* GitIncrementalStore.h */,
 				E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */,
+				E83FD05817739C27007EA3A7 /* MsgPackSerialization.h */,
+				E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */,
 			);
 			path = GitIncrementalStore;
 			sourceTree = "<group>";
@@ -820,6 +881,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */,
+				E83FD04217739969007EA3A7 /* unpack.c in Sources */,
+				E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */,
+				E83FD04017739969007EA3A7 /* objectc.c in Sources */,
+				E83FD04817739969007EA3A7 /* zone.c in Sources */,
+				E83FD04417739969007EA3A7 /* version.c in Sources */,
 				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
 				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
 				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
@@ -830,8 +897,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83FD04517739969007EA3A7 /* version.c in Sources */,
 				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
+				E83FD04917739969007EA3A7 /* zone.c in Sources */,
+				E83FD04117739969007EA3A7 /* objectc.c in Sources */,
 				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
+				E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */,
+				E83FD04317739969007EA3A7 /* unpack.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,7 +1120,7 @@
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1063,7 +1135,7 @@
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1082,10 +1154,11 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\" \"$(SRCROOT)\"/**";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1100,10 +1173,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
