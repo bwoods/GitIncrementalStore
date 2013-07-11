@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E81FB016178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld */; };
 		E82B51EE177D14A900A40750 /* attr_file.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B5125177D14A800A40750 /* attr_file.c */; };
 		E82B51EF177D14A900A40750 /* attr.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B5127177D14A800A40750 /* attr.c */; };
 		E82B51F0177D14A900A40750 /* blob.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B512A177D14A800A40750 /* blob.c */; };
@@ -173,6 +174,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E81FB017178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GitIncrementalStoreTests.xcdatamodel; sourceTree = "<group>"; };
 		E82B5124177D14A800A40750 /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = array.h; sourceTree = "<group>"; };
 		E82B5125177D14A800A40750 /* attr_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr_file.c; sourceTree = "<group>"; };
 		E82B5126177D14A800A40750 /* attr_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attr_file.h; sourceTree = "<group>"; };
@@ -538,8 +540,8 @@
 			isa = PBXGroup;
 			children = (
 				E8AB5A061770E78A00EE045E /* GitIncrementalStore */,
-				E8AB5A071770E78A00EE045E /* Supporting Files */,
 				E8AB5A1F1770E78A00EE045E /* Unit Tests */,
+				E8AB5A071770E78A00EE045E /* Supporting Files */,
 				E8AB59FF1770E78A00EE045E /* Frameworks */,
 				E8AB59FE1770E78A00EE045E /* Products */,
 			);
@@ -599,6 +601,7 @@
 		E8AB5A1F1770E78A00EE045E /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E81FB016178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld */,
 				E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */,
 				E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */,
 				E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */,
@@ -934,6 +937,7 @@
 				E83FD04517739969007EA3A7 /* version.c in Sources */,
 				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
 				E83FD04917739969007EA3A7 /* zone.c in Sources */,
+				E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */,
 				E83FD04117739969007EA3A7 /* objectc.c in Sources */,
 				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
 				E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */,
@@ -1299,6 +1303,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E81FB016178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E81FB017178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodel */,
+			);
+			currentVersion = E81FB017178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodel */;
+			path = GitIncrementalStoreTests.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E8AB59F51770E78A00EE045E /* Project object */;
 }

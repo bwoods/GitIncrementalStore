@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.4" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ExampleEntity" syncable="YES">
+        <attribute name="number" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" attributeType="String" defaultValueString="This space intentionally left blank." syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ExampleEntity" positionX="160" positionY="192" width="128" height="73"/>
+    </elements>
+</model>

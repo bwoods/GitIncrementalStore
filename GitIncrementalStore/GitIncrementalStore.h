@@ -10,3 +10,10 @@
 
 @end
 
+
+@interface NSManagedObjectID (GitIncrementalStore)
+
+- (NSString *) keyPathRepresentation;
+
+@end
+
