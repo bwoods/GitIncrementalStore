@@ -103,5 +103,18 @@
 	XCTAssertNotNil([results.lastObject valueForKey:@"text"], @"Default values are not properly restored: %@", results.lastObject);
 }
 
+- (void) testIncrementalStoreWriteSpeed
+{
+	for (int i = 0; i < 2000; ++i)
+	{
+		NSManagedObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleEntity" inManagedObjectContext:self.managedObjectContext];
+		[object setValue:@( arc4random() ) forKey:@"number"];
+	}
+
+	NSError * error = nil;
+	[self.managedObjectContext save:&error];
+	XCTAssertNil(error, @"Couldn’t save the managedObjectContext: %@", error.localizedDescription);
+}
+
 @end
 

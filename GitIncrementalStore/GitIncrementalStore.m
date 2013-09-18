@@ -6,6 +6,9 @@
 #import "MsgPackSerialization.h"
 #import "git2.h"
 
+#import "lmdb_odb_backend.h"
+#import "odb.h"
+
 
 @interface GitIncrementalStore ( )
 
@@ -269,7 +272,7 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 
 #pragma mark - NSPersistentStore methods
 
-static NSString * NSPersistentStoreMetadataFilename = @"incremental-store";
+static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 - (void) setMetadata:(NSDictionary *)metadata
 {
@@ -307,11 +310,17 @@ static NSString * NSPersistentStoreMetadataFilename = @"incremental-store";
 
 	git_repository * repository;
 	const char * reference_name = "refs/save";
+	const char * odb_path = [url.path stringByAppendingPathComponent:@"lmdb"].fileSystemRepresentation;
 
 	if (git_repository_open(&repository, url.path.fileSystemRepresentation) == GIT_OK)
+	{
+		throw_if_error(git_odb_backend_lmdb(repository, odb_path));
 		throw_if_error(git_reference_lookup(&_reference, repository, reference_name));
+	}
 	else if (git_repository_init(&repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
 	{
+		throw_if_error(git_odb_backend_lmdb(repository, odb_path));
+
 		// an empty repository is an empty tree…
 		git_treebuilder * empty;
 		git_treebuilder_create(&empty, nil);
@@ -322,7 +331,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"incremental-store";
 		git_treebuilder_free(empty);
 
 		git_tree * tree;
-		git_tree_lookup(&tree, git_reference_owner(self.reference), git_reference_target(self.reference));
+		throw_if_error(git_tree_lookup(&tree, git_reference_owner(self.reference), git_reference_target(self.reference)));
 
 		// …with a corresponding commit…
 		git_signature * signature;
@@ -339,7 +348,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"incremental-store";
 	}
 
 	[[NSFileManager defaultManager] setAttributes:@{
-		NSFileProtectionKey : NSFileProtectionCompleteUnlessOpen,
+		NSFileProtectionKey : NSFileProtectionNone,
 		NSFileExtensionHidden : @YES
 	} ofItemAtPath:url.path error:nil];
 

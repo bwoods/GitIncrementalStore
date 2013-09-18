@@ -112,17 +112,19 @@
 		E82B5255177D14A900A40750 /* xpatience.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51E8177D14A900A40750 /* xpatience.c */; };
 		E82B5256177D14A900A40750 /* xprepare.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51E9177D14A900A40750 /* xprepare.c */; };
 		E82B5257177D14A900A40750 /* xutils.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51EC177D14A900A40750 /* xutils.c */; };
-		E83FD04017739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E83FD04117739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; };
-		E83FD04217739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E83FD04317739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; };
-		E83FD04417739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E83FD04517739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; };
-		E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; };
-		E83FD04817739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E83FD04917739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; };
+		E83FD04017739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04117739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04217739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04317739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04417739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04517739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04817739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
+		E83FD04917739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
 		E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E8900D5917E01EE200EFF1BB /* GitIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */; };
+		E8900D5A17E01EE500EFF1BB /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; };
 		E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */; };
 		E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A021770E78A00EE045E /* CoreGraphics.framework */; };
@@ -142,6 +144,12 @@
 		E8AB5E1E1770F8C800EE045E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E1D1770F8C800EE045E /* CoreData.framework */; };
 		E8AB5E1F1770F92000EE045E /* Libgit₂.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A341770EC5C00EE045E /* Libgit₂.a */; };
 		E8AB5E201770FC3500EE045E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
+		E8C12E3F17EA3E3300FC9EA4 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Os -Wno-int-conversion"; }; };
+		E8C12E4017EA3E3300FC9EA4 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Os -Wno-int-conversion"; }; };
+		E8C12E4117EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
+		E8C12E4217EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
+		E8CE7FA617DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */; };
+		E8CE7FA717DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +422,12 @@
 		E8AB5E1A1770F8B200EE045E /* GitIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitIncrementalStore.h; sourceTree = "<group>"; };
 		E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitIncrementalStore.m; sourceTree = "<group>"; };
 		E8AB5E1D1770F8C800EE045E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E8C12E3B17EA3E3300FC9EA4 /* lmdb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmdb.h; sourceTree = "<group>"; };
+		E8C12E3C17EA3E3300FC9EA4 /* mdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mdb.c; sourceTree = "<group>"; };
+		E8C12E3D17EA3E3300FC9EA4 /* midl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = midl.c; sourceTree = "<group>"; };
+		E8C12E3E17EA3E3300FC9EA4 /* midl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midl.h; sourceTree = "<group>"; };
+		E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lmdb_odb_backend.cc; sourceTree = "<group>"; };
+		E8CE7FA817DFE519001E4AF9 /* lmdb_odb_backend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmdb_odb_backend.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,6 +574,7 @@
 		E8AB59FF1770E78A00EE045E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8C12E3A17EA3E0E00FC9EA4 /* LMDB */,
 				E8AB5A361770EC5C00EE045E /* Libgit₂ */,
 				E83FD0391773991C007EA3A7 /* MsgPack */,
 				E8AB5A001770E78A00EE045E /* Foundation.framework */,
@@ -579,6 +594,8 @@
 				E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */,
 				E83FD05817739C27007EA3A7 /* MsgPackSerialization.h */,
 				E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */,
+				E8CE7FA817DFE519001E4AF9 /* lmdb_odb_backend.h */,
+				E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */,
 			);
 			path = GitIncrementalStore;
 			sourceTree = "<group>";
@@ -804,6 +821,18 @@
 			path = "deps/http-parser";
 			sourceTree = "<group>";
 		};
+		E8C12E3A17EA3E0E00FC9EA4 /* LMDB */ = {
+			isa = PBXGroup;
+			children = (
+				E8C12E3B17EA3E3300FC9EA4 /* lmdb.h */,
+				E8C12E3C17EA3E3300FC9EA4 /* mdb.c */,
+				E8C12E3E17EA3E3300FC9EA4 /* midl.h */,
+				E8C12E3D17EA3E3300FC9EA4 /* midl.c */,
+			);
+			name = LMDB;
+			path = OpenLDAP/libraries/liblmdb;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -918,15 +947,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
+				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
+				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
 				E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */,
+				E8CE7FA617DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */,
 				E83FD04217739969007EA3A7 /* unpack.c in Sources */,
 				E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */,
 				E83FD04017739969007EA3A7 /* objectc.c in Sources */,
 				E83FD04817739969007EA3A7 /* zone.c in Sources */,
 				E83FD04417739969007EA3A7 /* version.c in Sources */,
-				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
-				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
-				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
+				E8C12E4117EA3E3300FC9EA4 /* midl.c in Sources */,
+				E8C12E3F17EA3E3300FC9EA4 /* mdb.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,14 +966,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E83FD04517739969007EA3A7 /* version.c in Sources */,
-				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
-				E83FD04917739969007EA3A7 /* zone.c in Sources */,
-				E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */,
-				E83FD04117739969007EA3A7 /* objectc.c in Sources */,
+				E8900D5917E01EE200EFF1BB /* GitIncrementalStore.m in Sources */,
+				E8900D5A17E01EE500EFF1BB /* MsgPackSerialization.mm in Sources */,
+				E8CE7FA717DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */,
 				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
-				E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */,
+				E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */,
+				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
+				E83FD04117739969007EA3A7 /* objectc.c in Sources */,
 				E83FD04317739969007EA3A7 /* unpack.c in Sources */,
+				E83FD04517739969007EA3A7 /* version.c in Sources */,
+				E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */,
+				E83FD04917739969007EA3A7 /* zone.c in Sources */,
+				E8C12E4217EA3E3300FC9EA4 /* midl.c in Sources */,
+				E8C12E4017EA3E3300FC9EA4 /* mdb.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1106,8 +1143,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1162,6 +1199,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
@@ -1177,6 +1215,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
@@ -1187,6 +1226,7 @@
 		E8AB5A2D1770E78A00EE045E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GitIncrementalStore.app/GitIncrementalStore";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1194,15 +1234,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_WARN_UNUSED_FUNCTION = NO;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\" \"$(SRCROOT)\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1210,6 +1247,7 @@
 		E8AB5A2E1770E78A00EE045E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GitIncrementalStore.app/GitIncrementalStore";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1218,6 +1256,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
 				GCC_WARN_UNUSED_FUNCTION = NO;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
