@@ -1,3 +1,7 @@
 [submodule "Libgit₂"]
 	path = Libgit₂
 	url = https://github.com/libgit2/libgit2.git
+[submodule "OpenLDAP"]
+	path = OpenLDAP
+	url = git://git.openldap.org/openldap.git
+
