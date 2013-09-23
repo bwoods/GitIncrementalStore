@@ -27,7 +27,7 @@
 	NSString * path = self.URIRepresentation.path;
 	NSUInteger length = [path lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
-	char buffer[length];
+	char buffer[length+1];
 	[path getBytes:buffer maxLength:length usedLength:&length encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, path.length) remainingRange:0];
 	buffer[length] = '\0';
 
@@ -62,7 +62,7 @@
 static inline void throw_if_error(int status)
 {
 	if (status != GIT_OK)
-		@throw [NSException exceptionWithName:@"LibGit₂" reason:[NSString stringWithFormat:@"%s", giterr_last()->message] userInfo:nil];
+		@throw [NSException exceptionWithName:@"LibGit₂" reason:[[NSString alloc] initWithFormat:@"%s", giterr_last() ? giterr_last()->message : ""] userInfo:nil];
 }
 
 
