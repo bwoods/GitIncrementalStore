@@ -110,6 +110,8 @@ static int lmdb_backend_exists(git_odb_backend * backend, const git_oid * oid)
 }
 
 
+#pragma mark -
+
 lmdb_odb_backend::lmdb_odb_backend(const char * path)
 	: env(nullptr), dbi(0), txn(nullptr), git_odb_backend({
 		.read = lmdb_backend_read, .write = lmdb_backend_write,
@@ -148,7 +150,7 @@ lmdb_odb_backend::~lmdb_odb_backend() // the destructor is idempotent; important
 }
 
 
-extern "C" int git_odb_backend_lmdb(git_repository * repository, const char * path)
+extern "C" int git_odb_add_transactional_backend(git_repository * repository, const char * path)
 {
 	std::unique_ptr<lmdb_odb_backend> backend(new lmdb_odb_backend(path));
     if (backend == nullptr or backend->dbi == 0)
@@ -165,7 +167,10 @@ extern "C" int git_odb_backend_lmdb(git_repository * repository, const char * pa
 	return GIT_OK;
 }
 
-extern "C" int git_odb_backend_lmdb_begin(git_repository * repository)
+
+#pragma mark -
+
+extern "C" int git_odb_transaction_begin(git_repository * repository)
 {
 	git_odb * db;
 	git_repository_odb(&db, repository);
@@ -180,7 +185,7 @@ extern "C" int git_odb_backend_lmdb_begin(git_repository * repository)
 	return GIT_OK;
 }
 
-extern "C" int git_odb_backend_lmdb_commit(git_repository * repository)
+extern "C" int git_odb_transaction_commit(git_repository * repository)
 {
 	git_odb * db;
 	git_repository_odb(&db, repository);
@@ -195,7 +200,7 @@ extern "C" int git_odb_backend_lmdb_commit(git_repository * repository)
 	return result;
 }
 
-extern "C" int git_odb_backend_lmdb_rollback(git_repository * repository)
+extern "C" int git_odb_transaction_rollback(git_repository * repository)
 {
 	git_odb * db;
 	git_repository_odb(&db, repository);
@@ -209,6 +214,5 @@ extern "C" int git_odb_backend_lmdb_rollback(git_repository * repository)
 
 	return GIT_OK;
 }
-
 
 

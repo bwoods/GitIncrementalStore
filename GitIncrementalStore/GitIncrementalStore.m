@@ -6,7 +6,7 @@
 #import "MsgPackSerialization.h"
 #import "git2.h"
 
-#import "lmdb_odb_backend.h"
+#import "lmdb_transactional_backend.h"
 #import "odb.h"
 
 
@@ -190,7 +190,8 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 		}
 	};
 
-	git_odb_backend_lmdb_begin(git_reference_owner(self.reference));
+	// writes are done with a transaction
+	throw_if_error(git_odb_transaction_begin(git_reference_owner(self.reference)));
 
 	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
 	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
@@ -201,7 +202,8 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 	git_oid oid;
 	throw_if_error(git_index_write_tree(&oid, index));
 
-	git_odb_backend_lmdb_commit(git_reference_owner(self.reference));
+	git_odb_transaction_commit(git_reference_owner(self.reference));
+
 
 	git_reference * reference;
 	throw_if_error(git_reference_set_target(&reference, self.reference, &oid));
@@ -318,12 +320,12 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 	if (git_repository_open(&repository, url.path.fileSystemRepresentation) == GIT_OK)
 	{
-		throw_if_error(git_odb_backend_lmdb(repository, odb_path));
+		throw_if_error(git_odb_add_transactional_backend(repository, odb_path));
 		throw_if_error(git_reference_lookup(&_reference, repository, reference_name));
 	}
 	else if (git_repository_init(&repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
 	{
-		throw_if_error(git_odb_backend_lmdb(repository, odb_path));
+		throw_if_error(git_odb_add_transactional_backend(repository, odb_path));
 
 		// an empty repository is an empty tree…
 		git_treebuilder * empty;

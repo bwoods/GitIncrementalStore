@@ -148,8 +148,8 @@
 		E8C12E4017EA3E3300FC9EA4 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Os -Wno-int-conversion"; }; };
 		E8C12E4117EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
 		E8C12E4217EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
-		E8CE7FA617DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */; };
-		E8CE7FA717DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */; };
+		E8CE7FA617DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */; };
+		E8CE7FA717DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,8 +426,8 @@
 		E8C12E3C17EA3E3300FC9EA4 /* mdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mdb.c; sourceTree = "<group>"; };
 		E8C12E3D17EA3E3300FC9EA4 /* midl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = midl.c; sourceTree = "<group>"; };
 		E8C12E3E17EA3E3300FC9EA4 /* midl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midl.h; sourceTree = "<group>"; };
-		E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lmdb_odb_backend.cc; sourceTree = "<group>"; };
-		E8CE7FA817DFE519001E4AF9 /* lmdb_odb_backend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmdb_odb_backend.h; sourceTree = "<group>"; };
+		E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lmdb_transactional_backend.cc; sourceTree = "<group>"; };
+		E8CE7FA817DFE519001E4AF9 /* lmdb_transactional_backend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmdb_transactional_backend.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,8 +594,8 @@
 				E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */,
 				E83FD05817739C27007EA3A7 /* MsgPackSerialization.h */,
 				E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */,
-				E8CE7FA817DFE519001E4AF9 /* lmdb_odb_backend.h */,
-				E8CE7FA517DFBA0C001E4AF9 /* lmdb_odb_backend.cc */,
+				E8CE7FA817DFE519001E4AF9 /* lmdb_transactional_backend.h */,
+				E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */,
 			);
 			path = GitIncrementalStore;
 			sourceTree = "<group>";
@@ -951,7 +951,7 @@
 				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
 				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
 				E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */,
-				E8CE7FA617DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */,
+				E8CE7FA617DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */,
 				E83FD04217739969007EA3A7 /* unpack.c in Sources */,
 				E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */,
 				E83FD04017739969007EA3A7 /* objectc.c in Sources */,
@@ -968,7 +968,7 @@
 			files = (
 				E8900D5917E01EE200EFF1BB /* GitIncrementalStore.m in Sources */,
 				E8900D5A17E01EE500EFF1BB /* MsgPackSerialization.mm in Sources */,
-				E8CE7FA717DFBA0C001E4AF9 /* lmdb_odb_backend.cc in Sources */,
+				E8CE7FA717DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */,
 				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
 				E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */,
 				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
