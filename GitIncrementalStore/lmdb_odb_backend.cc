@@ -15,7 +15,7 @@ struct lmdb_odb_backend : git_odb_backend
 {
 	lmdb_odb_backend(const char * path);
 	~lmdb_odb_backend();
-	MDB_env * env; MDB_dbi dbi;
+	MDB_env * env; MDB_dbi dbi; MDB_txn * txn;
 };
 
 static void lmdb_backend_free(git_odb_backend * backend)
@@ -30,17 +30,20 @@ static int lmdb_backend_write(git_oid * oid, git_odb_backend * backend, const vo
 
 	MDB_val key = { .mv_data = oid->id, .mv_size = GIT_OID_RAWSZ };
 	MDB_val value = { .mv_data = const_cast<void *>(data), .mv_size = length + 1 }; // ‘type’ is stored at the end
+	int result;
 
 	MDB_txn * txn;
-	int rc = mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, nullptr, 0, &txn);
-	if ((rc = mdb_put(txn, static_cast<lmdb_odb_backend *>(backend)->dbi, &key, &value, MDB_RESERVE)) != MDB_SUCCESS)
+	if ((result = mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, static_cast<lmdb_odb_backend *>(backend)->txn, 0, &txn)) != MDB_SUCCESS)
+		return GIT_ERROR;
+		
+	if ((result = mdb_put(txn, static_cast<lmdb_odb_backend *>(backend)->dbi, &key, &value, MDB_RESERVE)) != MDB_SUCCESS)
 		return mdb_txn_abort(txn), GIT_ERROR;
 
 	std::memcpy(value.mv_data, data, length);
 	static_cast<char *>(value.mv_data)[length] = type;
 
-	rc = mdb_txn_commit(txn);
-	return rc == 0 ? GIT_OK : GIT_ERROR;
+	result = mdb_txn_commit(txn);
+	return result == MDB_SUCCESS ? GIT_OK : GIT_ERROR;
 }
 
 static int lmdb_backend_read(void ** data, size_t * length, git_otype * type, git_odb_backend * backend, const git_oid * oid)
@@ -108,7 +111,7 @@ static int lmdb_backend_exists(git_odb_backend * backend, const git_oid * oid)
 
 
 lmdb_odb_backend::lmdb_odb_backend(const char * path)
-	: env(nullptr), dbi(0), git_odb_backend({
+	: env(nullptr), dbi(0), txn(nullptr), git_odb_backend({
 		.read = lmdb_backend_read, .write = lmdb_backend_write,
 		.exists = lmdb_backend_exists, .foreach = lmdb_backend_foreach,
 		.free = lmdb_backend_free, .version = GIT_ODB_BACKEND_VERSION,
@@ -137,9 +140,10 @@ lmdb_odb_backend::lmdb_odb_backend(const char * path)
 		return this->~lmdb_odb_backend();
 }
 
-lmdb_odb_backend::~lmdb_odb_backend()
+lmdb_odb_backend::~lmdb_odb_backend() // the destructor is idempotent; important given the error handling in the constructor…
 {
-	mdb_dbi_close(env, dbi); dbi = 0; // the destructor is idempotent; important given the error handling in the constructor…
+	mdb_txn_abort(txn); txn = nullptr;
+	mdb_dbi_close(env, dbi); dbi = 0;
 	mdb_env_close(env); env = nullptr;
 }
 
@@ -160,5 +164,51 @@ extern "C" int git_odb_backend_lmdb(git_repository * repository, const char * pa
 
 	return GIT_OK;
 }
+
+extern "C" int git_odb_backend_lmdb_begin(git_repository * repository)
+{
+	git_odb * db;
+	git_repository_odb(&db, repository);
+
+	git_odb_backend * backend;
+	git_odb_get_backend(&backend, db, 0);
+	git_odb_free(db);
+
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, nullptr, 0, &static_cast<lmdb_odb_backend *>(backend)->txn) != MDB_SUCCESS)
+		return GIT_ERROR;
+
+	return GIT_OK;
+}
+
+extern "C" int git_odb_backend_lmdb_commit(git_repository * repository)
+{
+	git_odb * db;
+	git_repository_odb(&db, repository);
+
+	git_odb_backend * backend;
+	git_odb_get_backend(&backend, db, 0);
+	git_odb_free(db);
+
+	int result = mdb_txn_commit(static_cast<lmdb_odb_backend *>(backend)->txn);
+	static_cast<lmdb_odb_backend *>(backend)->txn = nullptr;
+
+	return result;
+}
+
+extern "C" int git_odb_backend_lmdb_rollback(git_repository * repository)
+{
+	git_odb * db;
+	git_repository_odb(&db, repository);
+
+	git_odb_backend * backend;
+	git_odb_get_backend(&backend, db, 0);
+	git_odb_free(db);
+
+	mdb_txn_abort(static_cast<lmdb_odb_backend *>(backend)->txn);
+	static_cast<lmdb_odb_backend *>(backend)->txn = nullptr;
+
+	return GIT_OK;
+}
+
 
 

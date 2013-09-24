@@ -190,6 +190,8 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 		}
 	};
 
+	git_odb_backend_lmdb_begin(git_reference_owner(self.reference));
+
 	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
 	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
 
@@ -198,6 +200,8 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 
 	git_oid oid;
 	throw_if_error(git_index_write_tree(&oid, index));
+
+	git_odb_backend_lmdb_commit(git_reference_owner(self.reference));
 
 	git_reference * reference;
 	throw_if_error(git_reference_set_target(&reference, self.reference, &oid));
