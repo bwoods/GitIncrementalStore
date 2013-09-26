@@ -32,8 +32,8 @@ static int lmdb_backend_write(git_oid * oid, git_odb_backend * backend, const vo
 	MDB_val value = { .mv_data = const_cast<void *>(data), .mv_size = length + 1 }; // ‘type’ is stored at the beginning
 	int result;
 
-	MDB_txn * txn;
-	if ((result = mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, static_cast<lmdb_odb_backend *>(backend)->txn, 0, &txn)) != MDB_SUCCESS)
+	MDB_txn * txn, * parent = static_cast<lmdb_odb_backend *>(backend)->txn;
+	if ((result = mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, parent, 0, &txn)) != MDB_SUCCESS)
 		return GIT_ERROR;
 		
 	if ((result = mdb_put(txn, static_cast<lmdb_odb_backend *>(backend)->dbi, &key, &value, MDB_RESERVE)) != MDB_SUCCESS)
@@ -48,8 +48,8 @@ static int lmdb_backend_write(git_oid * oid, git_odb_backend * backend, const vo
 
 static int lmdb_backend_read(void ** data, size_t * length, git_otype * type, git_odb_backend * backend, const git_oid * oid)
 {
-	MDB_txn * txn;
-	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, nullptr, MDB_RDONLY, &txn) != MDB_SUCCESS)
+	MDB_txn * txn, * parent = static_cast<lmdb_odb_backend *>(backend)->txn;
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, parent, parent ? 0 : MDB_RDONLY, &txn) != MDB_SUCCESS)
 		return GIT_ERROR;
 
 	MDB_val key = { .mv_data = const_cast<void *>(reinterpret_cast<const void *>(&oid->id)), .mv_size = GIT_OID_RAWSZ };
@@ -74,8 +74,8 @@ static int lmdb_backend_read(void ** data, size_t * length, git_otype * type, gi
 
 static int lmdb_backend_read_header(size_t * length, git_otype * type, git_odb_backend * backend, const git_oid * oid)
 {
-	MDB_txn * txn;
-	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, static_cast<lmdb_odb_backend *>(backend)->txn, 0, &txn) != MDB_SUCCESS)
+	MDB_txn * txn, * parent = static_cast<lmdb_odb_backend *>(backend)->txn;
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, parent, parent ? 0 : MDB_RDONLY, &txn) != MDB_SUCCESS)
 		return GIT_ERROR;
 
 	MDB_val key = { .mv_data = const_cast<void *>(reinterpret_cast<const void *>(&oid->id)), .mv_size = GIT_OID_RAWSZ };
