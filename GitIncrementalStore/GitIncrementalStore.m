@@ -190,7 +190,7 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 		}
 	};
 
-	// writes are done with a transaction
+	// writes are done within a transaction
 	throw_if_error(git_odb_transaction_begin(git_reference_owner(self.reference)));
 
 	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
@@ -199,11 +199,18 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 	for (NSManagedObject * object in saveRequest.deletedObjects)
 		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String); // TODO: ensure this actually functions as a delete
 
+	// write the objects to a git packfile
+	git_packbuilder * builder;
+	throw_if_error(git_packbuilder_new(&builder, git_reference_owner(self.reference)));
+
 	git_oid oid;
 	throw_if_error(git_index_write_tree(&oid, index));
+	throw_if_error(git_packbuilder_insert_tree(builder, &oid));
+	throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(git_reference_owner(self.reference)) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
+	git_packbuilder_free(builder);
 
-	git_odb_transaction_commit(git_reference_owner(self.reference));
-
+	// now that pack is written, discard all the “loose” objects
+	git_odb_transaction_rollback(git_reference_owner(self.reference));
 
 	git_reference * reference;
 	throw_if_error(git_reference_set_target(&reference, self.reference, &oid));
@@ -316,17 +323,11 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 	git_repository * repository;
 	const char * reference_name = "refs/save";
-	const char * odb_path = [url.path stringByAppendingPathComponent:@"lmdb"].fileSystemRepresentation;
 
 	if (git_repository_open(&repository, url.path.fileSystemRepresentation) == GIT_OK)
-	{
-		throw_if_error(git_odb_add_transactional_backend(repository, odb_path));
 		throw_if_error(git_reference_lookup(&_reference, repository, reference_name));
-	}
 	else if (git_repository_init(&repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
 	{
-		throw_if_error(git_odb_add_transactional_backend(repository, odb_path));
-
 		// an empty repository is an empty tree…
 		git_treebuilder * empty;
 		git_treebuilder_create(&empty, nil);
@@ -352,6 +353,9 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 		throw_if_error(git_index_write(index));
 		git_index_free(index);
 	}
+
+	//
+	throw_if_error(git_odb_add_transactional_backend(repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
 
 	[[NSFileManager defaultManager] setAttributes:@{
 		NSFileProtectionKey : NSFileProtectionNone,
