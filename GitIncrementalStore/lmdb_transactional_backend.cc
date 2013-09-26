@@ -72,6 +72,28 @@ static int lmdb_backend_read(void ** data, size_t * length, git_otype * type, gi
 	return GIT_OK;
 }
 
+static int lmdb_backend_read_header(size_t * length, git_otype * type, git_odb_backend * backend, const git_oid * oid)
+{
+	MDB_txn * txn;
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, static_cast<lmdb_odb_backend *>(backend)->txn, 0, &txn) != MDB_SUCCESS)
+		return GIT_ERROR;
+
+	MDB_val key = { .mv_data = const_cast<void *>(reinterpret_cast<const void *>(&oid->id)), .mv_size = GIT_OID_RAWSZ };
+	MDB_val value = { };
+
+	int result = mdb_get(txn, static_cast<lmdb_odb_backend *>(backend)->dbi, &key, &value);
+	if (result == MDB_NOTFOUND)
+		return mdb_txn_abort(txn), GIT_ENOTFOUND;
+	else if (result != MDB_SUCCESS)
+		return mdb_txn_abort(txn), GIT_ERROR;
+
+    *length = value.mv_size - 1; // type is stored at the beginning of the value; see lmdb_backend_write
+    *type = static_cast<git_otype>(static_cast<const char *>(value.mv_data)[0]);
+
+	mdb_txn_abort(txn);
+	return GIT_OK;
+}
+
 
 static int lmdb_backend_foreach(git_odb_backend * backend, git_odb_foreach_cb callback, void * context)
 {
@@ -114,7 +136,7 @@ static int lmdb_backend_exists(git_odb_backend * backend, const git_oid * oid)
 
 lmdb_odb_backend::lmdb_odb_backend(const char * path)
 	: env(nullptr), dbi(0), txn(nullptr), git_odb_backend({
-		.read = lmdb_backend_read, .write = lmdb_backend_write,
+		.read_header = lmdb_backend_read_header, .read = lmdb_backend_read, .write = lmdb_backend_write,
 		.exists = lmdb_backend_exists, .foreach = lmdb_backend_foreach,
 		.free = lmdb_backend_free, .version = GIT_ODB_BACKEND_VERSION,
 	})
