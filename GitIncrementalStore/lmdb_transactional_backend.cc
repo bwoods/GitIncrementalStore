@@ -29,7 +29,7 @@ static int lmdb_backend_write(git_oid * oid, git_odb_backend * backend, const vo
 	git_odb_hash(oid, data, length, type);
 
 	MDB_val key = { .mv_data = oid->id, .mv_size = GIT_OID_RAWSZ };
-	MDB_val value = { .mv_data = const_cast<void *>(data), .mv_size = length + 1 }; // ‘type’ is stored at the end
+	MDB_val value = { .mv_data = const_cast<void *>(data), .mv_size = length + 1 }; // ‘type’ is stored at the beginning
 	int result;
 
 	MDB_txn * txn;
@@ -39,8 +39,8 @@ static int lmdb_backend_write(git_oid * oid, git_odb_backend * backend, const vo
 	if ((result = mdb_put(txn, static_cast<lmdb_odb_backend *>(backend)->dbi, &key, &value, MDB_RESERVE)) != MDB_SUCCESS)
 		return mdb_txn_abort(txn), GIT_ERROR;
 
-	std::memcpy(value.mv_data, data, length);
-	static_cast<char *>(value.mv_data)[length] = type;
+	static_cast<char *>(value.mv_data)[0] = type;
+	std::memcpy(static_cast<char *>(value.mv_data) + 1, data, length);
 
 	result = mdb_txn_commit(txn);
 	return result == MDB_SUCCESS ? GIT_OK : GIT_ERROR;
@@ -61,12 +61,12 @@ static int lmdb_backend_read(void ** data, size_t * length, git_otype * type, gi
 	else if (result != MDB_SUCCESS)
 		return mdb_txn_abort(txn), GIT_ERROR;
 
-    *length = value.mv_size - 1; // type is stored at the end of the value; see lmdb_backend_write
-    *type = static_cast<git_otype>(static_cast<const char *>(value.mv_data)[*length]);
+    *length = value.mv_size -= 1; // type is stored at the beginning of the value; see lmdb_backend_write
+    *type = static_cast<git_otype>(static_cast<const char *>(value.mv_data)[0]);
 
 	// LMDB would allow a simple pointer assign; but libgit2 insists on freeing the memory passed to it.
-    *data = git_odb_backend_malloc(backend, *length);
-    std::memcpy(*data, value.mv_data, *length);
+    *data = git_odb_backend_malloc(backend, value.mv_size);
+    std::memcpy(*data, static_cast<char *>(value.mv_data) + 1, value.mv_size);
 
 	mdb_txn_abort(txn);
 	return GIT_OK;
