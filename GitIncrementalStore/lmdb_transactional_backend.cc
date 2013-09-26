@@ -97,8 +97,8 @@ static int lmdb_backend_read_header(size_t * length, git_otype * type, git_odb_b
 
 static int lmdb_backend_foreach(git_odb_backend * backend, git_odb_foreach_cb callback, void * context)
 {
-	MDB_txn * txn;
-	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, nullptr, MDB_RDONLY, &txn) != MDB_SUCCESS)
+	MDB_txn * txn, * parent = static_cast<lmdb_odb_backend *>(backend)->txn;
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, parent, parent ? 0 : MDB_RDONLY, &txn) != MDB_SUCCESS)
 		return GIT_ERROR;
 
 	MDB_cursor * cursor;
@@ -118,8 +118,8 @@ static int lmdb_backend_foreach(git_odb_backend * backend, git_odb_foreach_cb ca
 
 static int lmdb_backend_exists(git_odb_backend * backend, const git_oid * oid)
 {
-	MDB_txn * txn;
-	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, nullptr, MDB_RDONLY, &txn) != MDB_SUCCESS)
+	MDB_txn * txn, * parent = static_cast<lmdb_odb_backend *>(backend)->txn;
+	if (mdb_txn_begin(static_cast<lmdb_odb_backend *>(backend)->env, parent, parent ? 0 : MDB_RDONLY, &txn) != MDB_SUCCESS)
 		return GIT_ERROR;
 
 	MDB_val key = { .mv_data = const_cast<void *>(reinterpret_cast<const void *>(&oid->id)), .mv_size = GIT_OID_RAWSZ };
