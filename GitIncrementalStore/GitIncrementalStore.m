@@ -15,7 +15,7 @@
 @property (strong, nonatomic) NSCache * transformerCache;
 
 @property (assign, nonatomic) git_signature empty_signature;
-@property (assign, nonatomic) git_reference * reference;
+@property (assign, nonatomic) git_repository * repository;
 
 @end
 
@@ -80,15 +80,24 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 {
 	NSMutableArray * managedObjects = [[NSMutableArray alloc] init];
 
+	git_reference * reference, * symbolic;
+	throw_if_error(git_reference_lookup(&symbolic, self.repository, "HEAD"));
+	throw_if_error(git_reference_resolve(&reference, symbolic));
+	git_reference_free(symbolic);
+	
+	git_commit * commit;
+	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
+	git_reference_free(reference);
+
 	git_tree * root;
-	git_tree_lookup(&root, git_reference_owner(self.reference), git_reference_target(self.reference));
+	throw_if_error(git_commit_tree(&root, commit));
 
 	void (^collectEntities)(NSString *) = ^(NSString * entityName) {
 		git_tree_entry * entry;
 		throw_if_error(git_tree_entry_bypath(&entry, root, entityName.UTF8String)); // grab the ‘EntityName’ entry…
 
 		git_tree * tree;
-		throw_if_error(git_tree_lookup(&tree, git_reference_owner(self.reference), git_tree_entry_id(entry))); // …and walk its sub-trees
+		throw_if_error(git_tree_lookup(&tree, self.repository, git_tree_entry_id(entry))); // …and walk its sub-trees
 
 		git_tree_walk(tree, GIT_TREEWALK_PRE, (git_treewalk_cb) fetch_request_treewalk_cb, (__bridge void *) ^(const char * prefix, const char * path) {
 			NSString * referenceObject = [[NSString alloc] initWithFormat:@"%c%c%c%s", prefix[0], prefix[1], prefix[2], path]; // undo the prefix/hash
@@ -139,7 +148,7 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 - (NSArray *) saveRequest:(NSSaveChangesRequest *)saveRequest withContext:(NSManagedObjectContext *)context error:(NSError  * __autoreleasing *)error
 {
 	git_index * index;
-	throw_if_error(git_repository_index(&index, git_reference_owner(self.reference)));
+	throw_if_error(git_repository_index(&index, self.repository));
 
 	void (^updateIndex)(NSManagedObject *, BOOL *) = ^(NSManagedObject * object, BOOL * stop) {
 		@autoreleasepool {
@@ -185,13 +194,13 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 			NSData * data = [MsgPackSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
 			
 			git_index_entry entry = { .mode = GIT_FILEMODE_BLOB, .path = (char *) object.objectID.keyPathRepresentation.UTF8String };
-			throw_if_error(git_blob_create_frombuffer(&entry.oid, git_reference_owner(self.reference), data.bytes, data.length));
+			throw_if_error(git_blob_create_frombuffer(&entry.oid, self.repository, data.bytes, data.length));
 			throw_if_error(git_index_add(index, &entry));
 		}
 	};
 
 	// writes are done within a transaction
-	throw_if_error(git_odb_transaction_begin(git_reference_owner(self.reference)));
+	throw_if_error(git_odb_transaction_begin(self.repository));
 
 	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
 	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
@@ -199,26 +208,44 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 	for (NSManagedObject * object in saveRequest.deletedObjects)
 		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String); // TODO: ensure this actually functions as a delete
 
-	// write the objects to a git packfile
-	git_packbuilder * builder;
-	throw_if_error(git_packbuilder_new(&builder, git_reference_owner(self.reference)));
-
+	// write out the index contents
 	git_oid oid;
 	throw_if_error(git_index_write_tree(&oid, index));
-	throw_if_error(git_packbuilder_insert_tree(builder, &oid));
-	throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(git_reference_owner(self.reference)) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
+	throw_if_error(git_index_write(index));
+	git_index_free(index);
+
+	// now commit
+	git_reference * reference, * symbolic;
+	throw_if_error(git_reference_lookup(&symbolic, self.repository, "HEAD"));
+	throw_if_error(git_reference_resolve(&reference, symbolic));
+
+	git_commit * commit;
+	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
+
+	git_commit * parent = nil;
+	git_commit_parent(&parent, commit, 0);
+
+	// only keep user commits (with messages) and the initial repository creation save; over-write autosaves
+	if (parent == nil || strcmp(git_commit_committer(commit)->email, self.empty_signature.email) != NSOrderedSame)
+		parent = commit;
+
+	git_tree * tree;
+	throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
+
+	git_signature * signature;
+	throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
+	throw_if_error(git_commit_create(/* replace oid with commit oid */ &oid, self.repository, "HEAD", signature, signature, nil, "Autosave.", tree, 1, (void *) &parent));
+	git_signature_free(signature);
+
+	// write the objects to a git packfile
+	git_packbuilder * builder;
+	throw_if_error(git_packbuilder_new(&builder, self.repository));
+	throw_if_error(git_packbuilder_insert_commit(builder, &oid));
+	throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
 	git_packbuilder_free(builder);
 
 	// now that pack is written, discard all the “loose” objects
-	git_odb_transaction_rollback(git_reference_owner(self.reference));
-
-	git_reference * reference;
-	throw_if_error(git_reference_set_target(&reference, self.reference, &oid));
-	git_reference_free(self.reference);
-	self.reference = reference;
-
-	throw_if_error(git_index_write(index));
-	git_index_free(index);
+	git_odb_transaction_rollback(self.repository);
 
 	return @[ ]; // “If the request is a save request, the method should return an empty array.” — NSIncrementalStore Class Reference
 }
@@ -228,14 +255,23 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 
 - (NSIncrementalStoreNode *) newValuesForObjectWithID:(NSManagedObjectID *)objectID withContext:(NSManagedObjectContext *)context error:(NSError * __autoreleasing *)error
 {
+	git_reference * reference, * symbolic;
+	throw_if_error(git_reference_lookup(&symbolic, self.repository, "HEAD"));
+	throw_if_error(git_reference_resolve(&reference, symbolic));
+	git_reference_free(symbolic);
+	
+	git_commit * commit;
+	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
+	git_reference_free(reference);
+
 	git_tree * root;
-	git_tree_lookup(&root, git_reference_owner(self.reference), git_reference_target(self.reference));
+	throw_if_error(git_commit_tree(&root, commit));
 
 	git_tree_entry * entry;
 	throw_if_error(git_tree_entry_bypath(&entry, root, objectID.keyPathRepresentation.UTF8String));
 
 	git_blob * blob;
-	git_blob_lookup(&blob, git_reference_owner(self.reference), git_tree_entry_id(entry));
+	git_blob_lookup(&blob, self.repository, git_tree_entry_id(entry));
 
 	NSData * data = [[NSData alloc] initWithBytesNoCopy:(void *)git_blob_rawcontent(blob) length:git_blob_rawsize(blob) freeWhenDone:NO];
 	NSMutableDictionary * values = [MsgPackSerialization JSONObjectWithData:data options:0 error:error];
@@ -317,45 +353,53 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	self.transformerCache = [[NSCache alloc] init];
 
 	self.empty_signature = (git_signature) {
-		(char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleName"] UTF8String],
-		(char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"] UTF8String],
+		.name = (char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleName"] UTF8String],
+		.email = (char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"] UTF8String],
 	};
 
-	git_repository * repository;
-	const char * reference_name = "refs/save";
-
-	if (git_repository_open(&repository, url.path.fileSystemRepresentation) == GIT_OK)
-		throw_if_error(git_reference_lookup(&_reference, repository, reference_name));
-	else if (git_repository_init(&repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
+	if (git_repository_open(&_repository, url.path.fileSystemRepresentation) == GIT_OK)
+		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
+	else if (git_repository_init(&_repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
 	{
+		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
+
+		// writes are done within a transaction
+		throw_if_error(git_odb_transaction_begin(self.repository));
+
 		// an empty repository is an empty tree…
 		git_treebuilder * empty;
 		git_treebuilder_create(&empty, nil);
 
 		git_oid oid;
-		throw_if_error(git_treebuilder_write(&oid, repository, empty));
-		throw_if_error(git_reference_create(&_reference, repository, reference_name, &oid, /* overwrite if needed */ YES));
+		throw_if_error(git_treebuilder_write(&oid, self.repository, empty));
 		git_treebuilder_free(empty);
 
 		git_tree * tree;
-		throw_if_error(git_tree_lookup(&tree, git_reference_owner(self.reference), git_reference_target(self.reference)));
+		throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
 
-		// …with a corresponding commit…
-		git_signature * signature;
-		throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
-		throw_if_error(git_commit_create(&oid, repository, "HEAD", signature, signature, nil, "Repository created.", tree, 0, nil));
-		git_signature_free(signature);
-
-		// …and an empty index file
+		// …and an empty index file…
 		git_index * index;
-		throw_if_error(git_repository_index(&index, repository));
+		throw_if_error(git_repository_index(&index, self.repository));
 		throw_if_error(git_index_read_tree(index, tree));
 		throw_if_error(git_index_write(index));
 		git_index_free(index);
-	}
 
-	//
-	throw_if_error(git_odb_add_transactional_backend(repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
+		// …with a corresponding commit
+		git_signature * signature;
+		throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
+		throw_if_error(git_commit_create(&oid, self.repository, "HEAD", signature, signature, nil, "Repository created.", tree, 0, nil));
+		git_signature_free(signature);
+
+		// write the objects to a git packfile
+		git_packbuilder * builder;
+		throw_if_error(git_packbuilder_new(&builder, self.repository));
+		throw_if_error(git_packbuilder_insert_commit(builder, &oid));
+		throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
+		git_packbuilder_free(builder);
+
+		// now that pack is written, discard all the “loose” objects
+		git_odb_transaction_rollback(self.repository);
+	}
 
 	[[NSFileManager defaultManager] setAttributes:@{
 		NSFileProtectionKey : NSFileProtectionNone,
@@ -370,8 +414,8 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 - (void) dealloc
 {
-	git_repository_free(git_reference_owner(self.reference));
-	git_reference_free(_reference);
+	git_repository_free(self.repository);
+//	git_reference_free(_reference);
 }
 
 + (void) initialize
@@ -380,4 +424,5 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 }
 
 @end
+
 

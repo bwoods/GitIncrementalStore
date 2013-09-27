@@ -1,6 +1,8 @@
 //
 //
 
+#include "git2.h"
+
 #pragma once
 
 
