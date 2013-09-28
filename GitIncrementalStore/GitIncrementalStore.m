@@ -247,6 +247,9 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 	// now that pack is written, discard all the “loose” objects
 	git_odb_transaction_rollback(self.repository);
 
+	// remove the index now that everything has been commited
+	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
+
 	return @[ ]; // “If the request is a save request, the method should return an empty array.” — NSIncrementalStore Class Reference
 }
 
@@ -399,6 +402,10 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 		// now that pack is written, discard all the “loose” objects
 		git_odb_transaction_rollback(self.repository);
+
+		// remove the index now that everything has been commited
+		[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
+
 	}
 
 	[[NSFileManager defaultManager] setAttributes:@{
