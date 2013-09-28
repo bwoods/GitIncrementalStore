@@ -68,6 +68,120 @@ static inline void throw_if_error(int status)
 
 #pragma mark -
 
+- (NSArray *) saveRequest:(NSSaveChangesRequest *)saveRequest withContext:(NSManagedObjectContext *)context error:(NSError * __autoreleasing *)error
+{
+	git_reference * reference, * symbolic;
+	throw_if_error(git_reference_lookup(&symbolic, self.repository, "HEAD"));
+	throw_if_error(git_reference_resolve(&reference, symbolic));
+	git_reference_free(symbolic);
+	
+	git_commit * commit;
+	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
+	git_reference_free(reference);
+
+	git_tree * root;
+	throw_if_error(git_commit_tree(&root, commit));
+
+	git_index * index;
+	throw_if_error(git_repository_index(&index, self.repository));
+	throw_if_error(git_index_read_tree(index, root));
+
+	// writes are done within a transaction
+	throw_if_error(git_odb_transaction_begin(self.repository));
+
+	void (^updateIndex)(NSManagedObject *, BOOL *) = ^(NSManagedObject * object, BOOL * stop) {
+		@autoreleasepool {
+			NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
+			[object.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSAttributeDescription * property, BOOL * stop) {
+				if (property.isTransient == YES)
+					return;
+				if (property.attributeType != NSTransformableAttributeType) {
+					if ([property.defaultValue isEqual:[object valueForKey:key]] == NO)
+						dictionary[key] = [object valueForKey:key];
+				}
+				else
+				{
+					NSValueTransformer * transformer = [self.transformerCache objectForKey:property.valueTransformerName];
+					if (transformer == nil) {
+						transformer = [[NSClassFromString(property.valueTransformerName) alloc] init];
+						[self.transformerCache setObject:transformer forKey:property.valueTransformerName];
+					}
+
+					if ([transformer.class allowsReverseTransformation])
+						dictionary[key] = [transformer reverseTransformedValue:dictionary[key]];
+					else
+						dictionary[key] = [transformer transformedValue:dictionary[key]];
+				}
+			}];
+
+			[object.entity.relationshipsByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSRelationshipDescription * property, BOOL * stop) {
+				if (property.isTransient == YES)
+					return;
+				if (property.isToMany == NO)
+					dictionary[key] = [self referenceObjectForObjectID:[[object valueForKey:key] objectID]];
+				else {
+					NSMutableArray * values = [[NSMutableArray alloc] init];
+					for (NSManagedObject * obj in [object valueForKey:key]) // works for NSSet or NSOrderedSet
+						[values addObject:[self referenceObjectForObjectID:obj.objectID]];
+
+					[values sortUsingSelector:@selector(compare:)]; // sort for consistency
+					dictionary[key] = values;
+				}
+			}];
+
+			// Note: MsgPackSerialization stores dictionaries sorted by key
+			NSData * data = [MsgPackSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+			
+			git_index_entry entry = { .mode = GIT_FILEMODE_BLOB, .path = (char *) object.objectID.keyPathRepresentation.UTF8String };
+			throw_if_error(git_blob_create_frombuffer(&entry.oid, self.repository, data.bytes, data.length));
+			throw_if_error(git_index_add(index, &entry));
+		}
+	};
+
+	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
+	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
+
+	for (NSManagedObject * object in saveRequest.deletedObjects)
+		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String); // TODO: ensure this actually functions as a delete
+
+	// write out the index contents
+	git_oid oid;
+	throw_if_error(git_index_write_tree(&oid, index));
+	throw_if_error(git_index_write(index));
+	git_index_free(index);
+
+	git_commit * parent = nil;
+	git_commit_parent(&parent, commit, 0);
+
+	// only keep user commits (with messages) and the initial repository creation save; over-write autosaves
+	if (parent == nil || strcmp(git_commit_committer(commit)->email, self.empty_signature.email) != NSOrderedSame)
+		parent = commit;
+
+	git_tree * tree;
+	throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
+
+	git_signature * signature;
+	throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
+	throw_if_error(git_commit_create(/* replace tree oid with commit oid */ &oid, self.repository, "HEAD", signature, signature, nil, "Autosave.", tree, 1, (void *) &parent));
+	git_signature_free(signature);
+
+	// write the objects to a git packfile
+	git_packbuilder * builder;
+	throw_if_error(git_packbuilder_new(&builder, self.repository));
+	throw_if_error(git_packbuilder_insert_commit(builder, &oid));
+	throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
+	git_packbuilder_free(builder);
+
+	// now that pack is written, discard all the “loose” objects
+	git_odb_transaction_rollback(self.repository);
+
+	// remove the index now that everything has been commited
+	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
+
+	return @[ ]; // “If the request is a save request, the method should return an empty array.” — NSIncrementalStore Class Reference
+}
+
+
 static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry * entry, void(^block)(const char *, const char *))
 {
 	if (git_tree_entry_type(entry) == GIT_OBJ_BLOB)
@@ -143,114 +257,6 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 	}
 
 	return nil;
-}
-
-- (NSArray *) saveRequest:(NSSaveChangesRequest *)saveRequest withContext:(NSManagedObjectContext *)context error:(NSError  * __autoreleasing *)error
-{
-	git_index * index;
-	throw_if_error(git_repository_index(&index, self.repository));
-
-	void (^updateIndex)(NSManagedObject *, BOOL *) = ^(NSManagedObject * object, BOOL * stop) {
-		@autoreleasepool {
-			NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
-			[object.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSAttributeDescription * property, BOOL * stop) {
-				if (property.isTransient == YES)
-					return;
-				if (property.attributeType != NSTransformableAttributeType) {
-					if ([property.defaultValue isEqual:[object valueForKey:key]] == NO)
-						dictionary[key] = [object valueForKey:key];
-				}
-				else
-				{
-					NSValueTransformer * transformer = [self.transformerCache objectForKey:property.valueTransformerName];
-					if (transformer == nil) {
-						transformer = [[NSClassFromString(property.valueTransformerName) alloc] init];
-						[self.transformerCache setObject:transformer forKey:property.valueTransformerName];
-					}
-
-					if ([transformer.class allowsReverseTransformation])
-						dictionary[key] = [transformer reverseTransformedValue:dictionary[key]];
-					else
-						dictionary[key] = [transformer transformedValue:dictionary[key]];
-				}
-			}];
-
-			[object.entity.relationshipsByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSRelationshipDescription * property, BOOL * stop) {
-				if (property.isTransient == YES)
-					return;
-				if (property.isToMany == NO)
-					dictionary[key] = [self referenceObjectForObjectID:[[object valueForKey:key] objectID]];
-				else {
-					NSMutableArray * values = [[NSMutableArray alloc] init];
-					for (NSManagedObject * obj in [object valueForKey:key]) // works for NSSet or NSOrderedSet
-						[values addObject:[self referenceObjectForObjectID:obj.objectID]];
-
-					[values sortUsingSelector:@selector(compare:)]; // sort for consistency
-					dictionary[key] = values;
-				}
-			}];
-
-			// Note: MsgPackSerialization stores dictionaries sorted by key
-			NSData * data = [MsgPackSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-			
-			git_index_entry entry = { .mode = GIT_FILEMODE_BLOB, .path = (char *) object.objectID.keyPathRepresentation.UTF8String };
-			throw_if_error(git_blob_create_frombuffer(&entry.oid, self.repository, data.bytes, data.length));
-			throw_if_error(git_index_add(index, &entry));
-		}
-	};
-
-	// writes are done within a transaction
-	throw_if_error(git_odb_transaction_begin(self.repository));
-
-	[saveRequest.insertedObjects enumerateObjectsUsingBlock:updateIndex];
-	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
-
-	for (NSManagedObject * object in saveRequest.deletedObjects)
-		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String); // TODO: ensure this actually functions as a delete
-
-	// write out the index contents
-	git_oid oid;
-	throw_if_error(git_index_write_tree(&oid, index));
-	throw_if_error(git_index_write(index));
-	git_index_free(index);
-
-	// now commit
-	git_reference * reference, * symbolic;
-	throw_if_error(git_reference_lookup(&symbolic, self.repository, "HEAD"));
-	throw_if_error(git_reference_resolve(&reference, symbolic));
-
-	git_commit * commit;
-	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
-
-	git_commit * parent = nil;
-	git_commit_parent(&parent, commit, 0);
-
-	// only keep user commits (with messages) and the initial repository creation save; over-write autosaves
-	if (parent == nil || strcmp(git_commit_committer(commit)->email, self.empty_signature.email) != NSOrderedSame)
-		parent = commit;
-
-	git_tree * tree;
-	throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
-
-	git_signature * signature;
-	throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
-	throw_if_error(git_commit_create(/* replace oid with commit oid */ &oid, self.repository, "HEAD", signature, signature, nil, "Autosave.", tree, 1, (void *) &parent));
-	git_signature_free(signature);
-
-	// write the objects to a git packfile
-	git_packbuilder * builder;
-	throw_if_error(git_packbuilder_new(&builder, self.repository));
-	throw_if_error(git_packbuilder_insert_commit(builder, &oid));
-	throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
-	git_packbuilder_free(builder);
-
-	// now that pack is written, discard all the “loose” objects
-	git_odb_transaction_rollback(self.repository);
-
-	// remove the index now that everything has been commited
-	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
-
-	return @[ ]; // “If the request is a save request, the method should return an empty array.” — NSIncrementalStore Class Reference
 }
 
 
@@ -360,11 +366,12 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 		.email = (char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"] UTF8String],
 	};
 
+	NSString * transactions = @"objects/transactions";
 	if (git_repository_open(&_repository, url.path.fileSystemRepresentation) == GIT_OK)
-		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
+		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:transactions].fileSystemRepresentation));
 	else if (git_repository_init(&_repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
 	{
-		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:@"objects/transactions"].fileSystemRepresentation));
+		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:transactions].fileSystemRepresentation));
 
 		// writes are done within a transaction
 		throw_if_error(git_odb_transaction_begin(self.repository));
@@ -379,13 +386,6 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 		git_tree * tree;
 		throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
-
-		// …and an empty index file…
-		git_index * index;
-		throw_if_error(git_repository_index(&index, self.repository));
-		throw_if_error(git_index_read_tree(index, tree));
-		throw_if_error(git_index_write(index));
-		git_index_free(index);
 
 		// …with a corresponding commit
 		git_signature * signature;
@@ -402,11 +402,10 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 		// now that pack is written, discard all the “loose” objects
 		git_odb_transaction_rollback(self.repository);
-
-		// remove the index now that everything has been commited
-		[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
-
 	}
+
+	// a crash could leave a dangling/corrupted index file, so…
+	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
 
 	[[NSFileManager defaultManager] setAttributes:@{
 		NSFileProtectionKey : NSFileProtectionNone,
@@ -422,7 +421,6 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 - (void) dealloc
 {
 	git_repository_free(self.repository);
-//	git_reference_free(_reference);
 }
 
 + (void) initialize
