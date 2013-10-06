@@ -13,12 +13,38 @@
 @interface GitIncrementalStore ( )
 
 @property (strong, nonatomic) NSCache * transformerCache;
-
-@property (assign, nonatomic) git_signature empty_signature;
 @property (assign, nonatomic) git_repository * repository;
 
 @end
 
+
+static NSString * emptyCommitMessage, * emptyCommitAuthor, * emptyCommitEmail;
+
+@implementation NSSaveChangesRequest (GitCommitChangesRequest)
+
+- (NSString *) message
+{
+	return emptyCommitMessage;
+}
+
+- (NSString *) author
+{
+	return emptyCommitAuthor;
+}
+
+- (NSString *) email
+{
+	return emptyCommitEmail;
+}
+
+@end
+
+@implementation GitCommitChangesRequest
+
+@end
+
+
+#pragma mark -
 
 @implementation NSManagedObjectID (GitIncrementalStore)
 
@@ -154,15 +180,15 @@ static inline void throw_if_error(int status)
 	git_commit_parent(&parent, commit, 0);
 
 	// only keep user commits (with messages) and the initial repository creation save; over-write autosaves
-	if (parent == nil || strcmp(git_commit_committer(commit)->email, self.empty_signature.email) != NSOrderedSame)
+	if (parent == nil || strcmp(git_commit_committer(commit)->email, emptyCommitEmail.UTF8String) != NSOrderedSame)
 		parent = commit;
 
 	git_tree * tree;
 	throw_if_error(git_tree_lookup(&tree, self.repository, &oid));
 
 	git_signature * signature;
-	throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
-	throw_if_error(git_commit_create(/* replace tree oid with commit oid */ &oid, self.repository, "HEAD", signature, signature, nil, "Autosave.", tree, 1, (void *) &parent));
+	throw_if_error(git_signature_now(&signature, saveRequest.author.UTF8String, saveRequest.email.UTF8String));
+	throw_if_error(git_commit_create(/* replace tree oid with commit oid */ &oid, self.repository, "HEAD", signature, signature, nil, saveRequest.message.UTF8String, tree, 1, (void *) &parent));
 	git_signature_free(signature);
 
 	// write the objects to a git packfile
@@ -182,7 +208,7 @@ static inline void throw_if_error(int status)
 }
 
 
-static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry * entry, void(^block)(const char *, const char *))
+static int fetch_request_treewalk_with_block(const char * prefix, const git_tree_entry * entry, void(^block)(const char *, const char *))
 {
 	if (git_tree_entry_type(entry) == GIT_OBJ_BLOB)
 		block(prefix, git_tree_entry_name(entry));
@@ -213,7 +239,7 @@ static int fetch_request_treewalk_cb(const char * prefix, const git_tree_entry *
 		git_tree * tree;
 		throw_if_error(git_tree_lookup(&tree, self.repository, git_tree_entry_id(entry))); // …and walk its sub-trees
 
-		git_tree_walk(tree, GIT_TREEWALK_PRE, (git_treewalk_cb) fetch_request_treewalk_cb, (__bridge void *) ^(const char * prefix, const char * path) {
+		git_tree_walk(tree, GIT_TREEWALK_PRE, (git_treewalk_cb) fetch_request_treewalk_with_block, (__bridge void *) ^(const char * prefix, const char * path) {
 			NSString * referenceObject = [[NSString alloc] initWithFormat:@"%c%c%c%s", prefix[0], prefix[1], prefix[2], path]; // undo the prefix/hash
 			NSManagedObjectID * objectID = [self newObjectIDForEntity:fetchRequest.entity referenceObject:referenceObject];
 			NSManagedObject * managedObject = [context objectWithID:objectID];
@@ -361,10 +387,9 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	self = [super initWithPersistentStoreCoordinator:coordinator configurationName:name URL:url options:options];
 	self.transformerCache = [[NSCache alloc] init];
 
-	self.empty_signature = (git_signature) {
-		.name = (char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleName"] UTF8String],
-		.email = (char *) [[NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"] UTF8String],
-	};
+	emptyCommitMessage = @"Autosave…";
+	emptyCommitAuthor = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
+	emptyCommitEmail =  [NSBundle mainBundle].infoDictionary[@"CFBundleIdentifier"];
 
 	NSString * transactions = @"objects/transactions";
 	if (git_repository_open(&_repository, url.path.fileSystemRepresentation) == GIT_OK)
@@ -389,11 +414,10 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 
 		// …with a corresponding commit
 		git_signature * signature;
-		throw_if_error(git_signature_now(&signature, self.empty_signature.name, self.empty_signature.email));
+		throw_if_error(git_signature_now(&signature, emptyCommitAuthor.UTF8String, emptyCommitEmail.UTF8String));
 		throw_if_error(git_commit_create(&oid, self.repository, "HEAD", signature, signature, nil, "Repository created.", tree, 0, nil));
 		git_signature_free(signature);
 
-		// write the objects to a git packfile
 		git_packbuilder * builder;
 		throw_if_error(git_packbuilder_new(&builder, self.repository));
 		throw_if_error(git_packbuilder_insert_commit(builder, &oid));

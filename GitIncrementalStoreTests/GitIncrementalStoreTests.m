@@ -116,5 +116,26 @@
 	XCTAssertNil(error, @"Couldn’t save the managedObjectContext: %@", error.localizedDescription);
 }
 
+- (void) testIncrementalStoreCommit
+{
+	NSNumber * value = @( arc4random() );
+
+	NSManagedObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleEntity" inManagedObjectContext:self.managedObjectContext];
+	[object setValue:value forKey:@"number"];
+
+	NSError * error = nil;
+	[self.managedObjectContext save:&error];
+	XCTAssertNil(error, @"Couldn’t save the managedObjectContext: %@", error.localizedDescription);
+
+	GitCommitChangesRequest * commit = [[GitCommitChangesRequest alloc] init];
+	commit.message = @"Test commit.";
+	commit.author = NSStringFromSelector(self.selector);
+	commit.email = NSStringFromClass(self.class);
+
+	error = nil;
+	[self.managedObjectContext.persistentStoreCoordinator executeRequest:commit withContext:self.managedObjectContext error:&error];
+	XCTAssertNil(error, @"Couldn’t commit the GitIncrementalStore: %@", error.localizedDescription);
+}
+
 @end
 

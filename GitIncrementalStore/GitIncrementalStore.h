@@ -11,6 +11,13 @@
 @end
 
 
+@interface GitCommitChangesRequest : NSSaveChangesRequest
+
+@property (copy, nonatomic) NSString * message, * author, * email;
+
+@end
+
+
 @interface NSManagedObjectID (GitIncrementalStore)
 
 - (NSString *) keyPathRepresentation;
