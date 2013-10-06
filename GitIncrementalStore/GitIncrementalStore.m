@@ -407,6 +407,9 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	// a crash could leave a dangling/corrupted index file, so…
 	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
 
+	// no need for the default hooks folder
+	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"hooks"] error:nil];
+
 	[[NSFileManager defaultManager] setAttributes:@{
 		NSFileProtectionKey : NSFileProtectionNone,
 		NSFileExtensionHidden : @YES
