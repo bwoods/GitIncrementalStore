@@ -62,17 +62,12 @@ static NSString * emptyCommitMessage, * emptyCommitAuthor, * emptyCommitEmail;
 	for (int i = 0; i <= n; ++i)
 		buffer[i] = buffer[i+1];
 
-	// pb9b… → b9b/…
-	for (int i = 1; i < 4; ++i)
+	// pb9b3f2e8-2d26-4377-8388-e786c18d0be6 → b9b3f2e8-2d26-4377-8388-e786c18d0be6
+	for (int i = 1; i < 50; ++i)
 		buffer[n+i] = buffer[n+i+2];
-	buffer[n+4] = '/';
 
-	// …3f2e8-2d26-4377-8388-e786c18d0be6 → …3f2e8-2d26-4377-8388-e786c18d0be6
-	for (int i = 5; i < 50; ++i)
-		buffer[n+i] = buffer[n+i+1];
-
-	// EntityName/b9b/3f2e8-2d26-4377-8388-e786c18d0be6
-	return [[NSString alloc] initWithBytes:buffer length:length encoding:NSUTF8StringEncoding];
+	// EntityName/b9b3f2e8-2d26-4377-8388-e786c18d0be6
+	return [[NSString alloc] initWithBytes:buffer length:length - 2 encoding:NSASCIIStringEncoding];
 }
 
 @end
