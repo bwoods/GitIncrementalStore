@@ -100,12 +100,8 @@ static inline void throw_if_error(int status)
 	throw_if_error(git_commit_lookup(&commit, self.repository, git_reference_target(reference)));
 	git_reference_free(reference);
 
-	git_tree * root;
-	throw_if_error(git_commit_tree(&root, commit));
-
 	git_index * index;
 	throw_if_error(git_repository_index(&index, self.repository));
-	throw_if_error(git_index_read_tree(index, root));
 
 	// writes are done within a transaction
 	throw_if_error(git_odb_transaction_begin(self.repository));
@@ -163,7 +159,7 @@ static inline void throw_if_error(int status)
 	[saveRequest.updatedObjects enumerateObjectsUsingBlock:updateIndex];
 
 	for (NSManagedObject * object in saveRequest.deletedObjects)
-		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String); // TODO: ensure this actually functions as a delete
+		git_index_remove_bypath(index, object.objectID.keyPathRepresentation.UTF8String);
 
 	// write out the index contents
 	git_oid oid;
@@ -195,9 +191,6 @@ static inline void throw_if_error(int status)
 
 	// now that pack is written, discard all the “loose” objects
 	git_odb_transaction_rollback(self.repository);
-
-	// remove the index now that everything has been commited
-	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
 
 	return @[ ]; // “If the request is a save request, the method should return an empty array.” — NSIncrementalStore Class Reference
 }
