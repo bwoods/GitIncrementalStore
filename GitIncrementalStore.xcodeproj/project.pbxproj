@@ -125,44 +125,26 @@
 		E82B5255177D14A900A40750 /* xpatience.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51E8177D14A900A40750 /* xpatience.c */; };
 		E82B5256177D14A900A40750 /* xprepare.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51E9177D14A900A40750 /* xprepare.c */; };
 		E82B5257177D14A900A40750 /* xutils.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B51EC177D14A900A40750 /* xutils.c */; };
-		E83FD04017739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04117739969007EA3A7 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04217739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04317739969007EA3A7 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04417739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04517739969007EA3A7 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04817739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD04917739969007EA3A7 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Os -Wno-unused-function"; }; };
-		E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
-		E8900D5917E01EE200EFF1BB /* GitIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */; };
-		E8900D5A17E01EE500EFF1BB /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; };
 		E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */; };
 		E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A021770E78A00EE045E /* CoreGraphics.framework */; };
 		E8AB5A051770E78A00EE045E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A041770E78A00EE045E /* UIKit.framework */; };
 		E8AB5A0B1770E78A00EE045E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8AB5A091770E78A00EE045E /* InfoPlist.strings */; };
 		E8AB5A0D1770E78A00EE045E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A0C1770E78A00EE045E /* main.m */; };
-		E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A101770E78A00EE045E /* ApplicationDelegate.m */; };
 		E8AB5A131770E78A00EE045E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8AB5A121770E78A00EE045E /* Images.xcassets */; };
 		E8AB5A1A1770E78A00EE045E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A191770E78A00EE045E /* XCTest.framework */; };
 		E8AB5A1B1770E78A00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5A1C1770E78A00EE045E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A041770E78A00EE045E /* UIKit.framework */; };
-		E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */; };
+		E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.mm */; };
 		E8AB5A2F1770E81700EE045E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8AB5A091770E78A00EE045E /* InfoPlist.strings */; };
 		E8AB5A351770EC5C00EE045E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
 		E8AB5E131770F17700EE045E /* http_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E101770F17700EE045E /* http_parser.c */; };
-		E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */; };
 		E8AB5E1E1770F8C800EE045E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E1D1770F8C800EE045E /* CoreData.framework */; };
-		E8AB5E1F1770F92000EE045E /* Libgit₂.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A341770EC5C00EE045E /* Libgit₂.a */; };
-		E8AB5E201770FC3500EE045E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
-		E8C12E3F17EA3E3300FC9EA4 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Os -Wno-int-conversion"; }; };
-		E8C12E4017EA3E3300FC9EA4 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Os -Wno-int-conversion"; }; };
-		E8C12E4117EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
-		E8C12E4217EA3E3300FC9EA4 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; settings = {COMPILER_FLAGS = "-Os"; }; };
-		E8CE7FA617DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */; };
-		E8CE7FA717DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */; };
+		E8FB185818263D0900C62E1C /* libLibGitIncrementalStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */; };
+		E8FB185918263D1900C62E1C /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5A101770E78A00EE045E /* ApplicationDelegate.m */; };
+		E8FB185A18263D6C00C62E1C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
+		E8FB185B18263DFB00C62E1C /* libLibGitIncrementalStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */; };
+		E8FB185E18263E7900C62E1C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E1D1770F8C800EE045E /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,12 +162,12 @@
 			remoteGlobalIDString = E8AB59FC1770E78A00EE045E;
 			remoteInfo = GitIncrementalStore;
 		};
-		E8AB5C1E1770ECF400EE045E /* PBXContainerItemProxy */ = {
+		E8FB185618263CFD00C62E1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E8AB59F51770E78A00EE045E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E8AB5A331770EC5C00EE045E;
-			remoteInfo = "Libgit₂";
+			remoteGlobalIDString = E81235851825F4DA0094F673;
+			remoteInfo = LibGitIncrementalStore;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -443,7 +425,7 @@
 		E8AB5A181770E78A00EE045E /* GitIncrementalStoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitIncrementalStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AB5A191770E78A00EE045E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GitIncrementalStoreTests-Info.plist"; path = "GitIncrementalStoreTests/GitIncrementalStoreTests-Info.plist"; sourceTree = SOURCE_ROOT; };
-		E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GitIncrementalStoreTests.m; sourceTree = "<group>"; };
+		E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GitIncrementalStoreTests.mm; sourceTree = "<group>"; };
 		E8AB5A341770EC5C00EE045E /* Libgit₂.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "Libgit₂.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Libgit₂Tests.m"; sourceTree = "<group>"; };
 		E8AB5E101770F17700EE045E /* http_parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = http_parser.c; sourceTree = "<group>"; };
@@ -479,8 +461,8 @@
 				E8AB5A011770E78A00EE045E /* Foundation.framework in Frameworks */,
 				E8AB5A031770E78A00EE045E /* CoreGraphics.framework in Frameworks */,
 				E8AB5E1E1770F8C800EE045E /* CoreData.framework in Frameworks */,
-				E8AB5E1F1770F92000EE045E /* Libgit₂.a in Frameworks */,
-				E8AB5E201770FC3500EE045E /* libz.dylib in Frameworks */,
+				E8FB185818263D0900C62E1C /* libLibGitIncrementalStore.a in Frameworks */,
+				E8FB185A18263D6C00C62E1C /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,9 +470,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8FB185E18263E7900C62E1C /* CoreData.framework in Frameworks */,
 				E8AB5A1A1770E78A00EE045E /* XCTest.framework in Frameworks */,
 				E8AB5A1C1770E78A00EE045E /* UIKit.framework in Frameworks */,
 				E8AB5A1B1770E78A00EE045E /* Foundation.framework in Frameworks */,
+				E8FB185B18263DFB00C62E1C /* libLibGitIncrementalStore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,7 +645,7 @@
 			children = (
 				E81FB016178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld */,
 				E8AB5A211770E78A00EE045E /* GitIncrementalStoreTests-Info.plist */,
-				E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.m */,
+				E8AB5A251770E78A00EE045E /* GitIncrementalStoreTests.mm */,
 				E8AB5A4E1770EC5C00EE045E /* Libgit₂Tests.m */,
 			);
 			name = "Unit Tests";
@@ -906,7 +890,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E8AB5C1F1770ECF400EE045E /* PBXTargetDependency */,
+				E8FB185718263CFD00C62E1C /* PBXTargetDependency */,
 			);
 			name = GitIncrementalStore;
 			productName = GitIncrementalStore;
@@ -975,9 +959,9 @@
 			projectRoot = "";
 			targets = (
 				E8AB59FC1770E78A00EE045E /* GitIncrementalStore */,
+				E8AB5A171770E78A00EE045E /* GitIncrementalStoreTests */,
 				E81235851825F4DA0094F673 /* LibGitIncrementalStore */,
 				E8AB5A331770EC5C00EE045E /* Libgit₂ */,
-				E8AB5A171770E78A00EE045E /* GitIncrementalStoreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1025,17 +1009,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
-				E8AB5A111770E78A00EE045E /* ApplicationDelegate.m in Sources */,
-				E8AB5E1C1770F8B200EE045E /* GitIncrementalStore.m in Sources */,
-				E83FD05A17739C27007EA3A7 /* MsgPackSerialization.mm in Sources */,
-				E8CE7FA617DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */,
-				E83FD04217739969007EA3A7 /* unpack.c in Sources */,
-				E83FD04617739969007EA3A7 /* vrefbuffer.c in Sources */,
-				E83FD04017739969007EA3A7 /* objectc.c in Sources */,
-				E83FD04817739969007EA3A7 /* zone.c in Sources */,
-				E83FD04417739969007EA3A7 /* version.c in Sources */,
-				E8C12E4117EA3E3300FC9EA4 /* midl.c in Sources */,
-				E8C12E3F17EA3E3300FC9EA4 /* mdb.c in Sources */,
+				E8FB185918263D1900C62E1C /* ApplicationDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1043,19 +1017,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8900D5917E01EE200EFF1BB /* GitIncrementalStore.m in Sources */,
-				E8900D5A17E01EE500EFF1BB /* MsgPackSerialization.mm in Sources */,
-				E8CE7FA717DFBA0C001E4AF9 /* lmdb_transactional_backend.cc in Sources */,
-				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.m in Sources */,
 				E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */,
+				E8AB5A261770E78A00EE045E /* GitIncrementalStoreTests.mm in Sources */,
 				E8A29083177278EE00CA4C68 /* Libgit₂Tests.m in Sources */,
-				E83FD04117739969007EA3A7 /* objectc.c in Sources */,
-				E83FD04317739969007EA3A7 /* unpack.c in Sources */,
-				E83FD04517739969007EA3A7 /* version.c in Sources */,
-				E83FD04717739969007EA3A7 /* vrefbuffer.c in Sources */,
-				E83FD04917739969007EA3A7 /* zone.c in Sources */,
-				E8C12E4217EA3E3300FC9EA4 /* midl.c in Sources */,
-				E8C12E4017EA3E3300FC9EA4 /* mdb.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,10 +1148,10 @@
 			target = E8AB59FC1770E78A00EE045E /* GitIncrementalStore */;
 			targetProxy = E8AB5A1D1770E78A00EE045E /* PBXContainerItemProxy */;
 		};
-		E8AB5C1F1770ECF400EE045E /* PBXTargetDependency */ = {
+		E8FB185718263CFD00C62E1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E8AB5A331770EC5C00EE045E /* Libgit₂ */;
-			targetProxy = E8AB5C1E1770ECF400EE045E /* PBXContainerItemProxy */;
+			target = E81235851825F4DA0094F673 /* LibGitIncrementalStore */;
+			targetProxy = E8FB185618263CFD00C62E1C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1420,6 +1384,7 @@
 				E81235A31825F4DB0094F673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E8AB59F81770E78A00EE045E /* Build configuration list for PBXProject "GitIncrementalStore" */ = {
 			isa = XCConfigurationList;

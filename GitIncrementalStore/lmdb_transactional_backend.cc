@@ -149,7 +149,7 @@ lmdb_odb_backend::lmdb_odb_backend(const char * path)
 	mdb_env_set_mapsize(env, maximum);
 
 	if ((rc = mdb_env_open(env, path, MDB_NOSUBDIR, 0664)) != MDB_SUCCESS) {
-		std::cerr << mdb_strerror(rc) << std::endl;
+		puts(mdb_strerror(rc));
 		return this->~lmdb_odb_backend();
 	}
 
