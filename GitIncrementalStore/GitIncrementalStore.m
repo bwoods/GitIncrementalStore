@@ -404,8 +404,9 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	NSString * transactions = @"objects/transactions";
 	if (git_repository_open(&_repository, url.path.fileSystemRepresentation) == GIT_OK)
 		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:transactions].fileSystemRepresentation));
-	else if (git_repository_init(&_repository, url.path.fileSystemRepresentation, /* bare ? */ YES) == GIT_OK)
+	else
 	{
+		throw_if_error(git_repository_init(&_repository, url.path.fileSystemRepresentation, /* bare ? */ YES));
 		throw_if_error(git_odb_add_transactional_backend(self.repository, [url.path stringByAppendingPathComponent:transactions].fileSystemRepresentation));
 
 		// writes are done within a transaction
@@ -434,20 +435,16 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 		throw_if_error(git_packbuilder_write(builder, [@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"objects/pack"].fileSystemRepresentation, nil, nil));
 		git_packbuilder_free(builder);
 
-		// now that pack is written, discard all the “loose” objects
+		// now that the pack is written, discard all the “loose” objects
 		git_odb_transaction_rollback(self.repository);
+
+		// no need for the default hooks folder
+		[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"hooks"] error:nil];
+
+		[[NSFileManager defaultManager] setAttributes:@{
+			NSFileExtensionHidden : @YES
+		} ofItemAtPath:url.path error:nil];
 	}
-
-	// a crash could leave a dangling/corrupted index file, so…
-	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"index"] error:nil];
-
-	// no need for the default hooks folder
-	[[NSFileManager defaultManager] removeItemAtPath:[@( git_repository_path(self.repository) ) stringByAppendingPathComponent:@"hooks"] error:nil];
-
-	[[NSFileManager defaultManager] setAttributes:@{
-		NSFileProtectionKey : NSFileProtectionNone,
-		NSFileExtensionHidden : @YES
-	} ofItemAtPath:url.path error:nil];
 
 	return self;
 }
@@ -460,7 +457,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	git_repository_free(self.repository);
 }
 
-+ (void) initialize
++ (void) load
 {
 	[NSPersistentStoreCoordinator registerStoreClass:self forStoreType:self.type];
 }
