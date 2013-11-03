@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E81235871825F4DA0094F673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A001770E78A00EE045E /* Foundation.framework */; };
+		E81235A91825F5220094F673 /* GitIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AB5E1B1770F8B200EE045E /* GitIncrementalStore.m */; };
+		E81235AA1825F53F0094F673 /* MsgPackSerialization.mm in Sources */ = {isa = PBXBuildFile; fileRef = E83FD05917739C27007EA3A7 /* MsgPackSerialization.mm */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235AB1825F54C0094F673 /* lmdb_transactional_backend.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */; };
+		E81235AC1825F55B0094F673 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03C17739969007EA3A7 /* unpack.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235AD1825F55E0094F673 /* vrefbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03E17739969007EA3A7 /* vrefbuffer.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235AE1825F5630094F673 /* objectc.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03B17739969007EA3A7 /* objectc.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235AF1825F5670094F673 /* zone.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03F17739969007EA3A7 /* zone.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235B01825F56D0094F673 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = E83FD03D17739969007EA3A7 /* version.c */; settings = {COMPILER_FLAGS = "-Wno-unused-function"; }; };
+		E81235B11825F5760094F673 /* midl.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3D17EA3E3300FC9EA4 /* midl.c */; };
+		E81235B21825F5780094F673 /* mdb.c in Sources */ = {isa = PBXBuildFile; fileRef = E8C12E3C17EA3E3300FC9EA4 /* mdb.c */; settings = {COMPILER_FLAGS = "-Wno-int-conversion -Wno-shorten-64-to-32"; }; };
+		E81235B51825F5D50094F673 /* Libgit₂.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5A341770EC5C00EE045E /* Libgit₂.a */; };
+		E81235B61825F5DE0094F673 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
 		E81FB018178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E81FB016178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodeld */; };
 		E82B51EE177D14A900A40750 /* attr_file.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B5125177D14A800A40750 /* attr_file.c */; };
 		E82B51EF177D14A900A40750 /* attr.c in Sources */ = {isa = PBXBuildFile; fileRef = E82B5127177D14A800A40750 /* attr.c */; };
@@ -153,6 +166,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E81235B31825F5CF0094F673 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8AB59F51770E78A00EE045E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E8AB5A331770EC5C00EE045E;
+			remoteInfo = "Libgit₂";
+		};
 		E8AB5A1D1770E78A00EE045E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E8AB59F51770E78A00EE045E /* Project object */;
@@ -170,6 +190,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E81235841825F4DA0094F673 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8AB5A321770EC5C00EE045E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,6 +211,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLibGitIncrementalStore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81FB017178F556400B71D29 /* GitIncrementalStoreTests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GitIncrementalStoreTests.xcdatamodel; sourceTree = "<group>"; };
 		E82B5124177D14A800A40750 /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = array.h; sourceTree = "<group>"; };
 		E82B5125177D14A800A40750 /* attr_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = attr_file.c; sourceTree = "<group>"; };
@@ -431,6 +461,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E81235831825F4DA0094F673 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E81235871825F4DA0094F673 /* Foundation.framework in Frameworks */,
+				E81235B51825F5D50094F673 /* Libgit₂.a in Frameworks */,
+				E81235B61825F5DE0094F673 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8AB59FA1770E78A00EE045E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -567,6 +607,7 @@
 				E8AB59FD1770E78A00EE045E /* GitIncrementalStore.app */,
 				E8AB5A181770E78A00EE045E /* GitIncrementalStoreTests.xctest */,
 				E8AB5A341770EC5C00EE045E /* Libgit₂.a */,
+				E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -836,6 +877,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E81235851825F4DA0094F673 /* LibGitIncrementalStore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E81235A61825F4DB0094F673 /* Build configuration list for PBXNativeTarget "LibGitIncrementalStore" */;
+			buildPhases = (
+				E81235821825F4DA0094F673 /* Sources */,
+				E81235831825F4DA0094F673 /* Frameworks */,
+				E81235841825F4DA0094F673 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E81235B41825F5CF0094F673 /* PBXTargetDependency */,
+			);
+			name = LibGitIncrementalStore;
+			productName = LibGitIncrementalStore;
+			productReference = E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		E8AB59FC1770E78A00EE045E /* GitIncrementalStore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8AB5A291770E78A00EE045E /* Build configuration list for PBXNativeTarget "GitIncrementalStore" */;
@@ -916,6 +975,7 @@
 			projectRoot = "";
 			targets = (
 				E8AB59FC1770E78A00EE045E /* GitIncrementalStore */,
+				E81235851825F4DA0094F673 /* LibGitIncrementalStore */,
 				E8AB5A331770EC5C00EE045E /* Libgit₂ */,
 				E8AB5A171770E78A00EE045E /* GitIncrementalStoreTests */,
 			);
@@ -943,6 +1003,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E81235821825F4DA0094F673 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E81235A91825F5220094F673 /* GitIncrementalStore.m in Sources */,
+				E81235AA1825F53F0094F673 /* MsgPackSerialization.mm in Sources */,
+				E81235AB1825F54C0094F673 /* lmdb_transactional_backend.cc in Sources */,
+				E81235AC1825F55B0094F673 /* unpack.c in Sources */,
+				E81235AD1825F55E0094F673 /* vrefbuffer.c in Sources */,
+				E81235AE1825F5630094F673 /* objectc.c in Sources */,
+				E81235AF1825F5670094F673 /* zone.c in Sources */,
+				E81235B01825F56D0094F673 /* version.c in Sources */,
+				E81235B11825F5760094F673 /* midl.c in Sources */,
+				E81235B21825F5780094F673 /* mdb.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8AB59F91770E78A00EE045E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1097,6 +1174,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E81235B41825F5CF0094F673 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E8AB5A331770EC5C00EE045E /* Libgit₂ */;
+			targetProxy = E81235B31825F5CF0094F673 /* PBXContainerItemProxy */;
+		};
 		E8AB5A1E1770E78A00EE045E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E8AB59FC1770E78A00EE045E /* GitIncrementalStore */;
@@ -1121,6 +1203,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E81235A21825F4DB0094F673 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/LibGitIncrementalStore.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/** \"$(SRCROOT)/Libgit₂/include\"";
+			};
+			name = Debug;
+		};
+		E81235A31825F4DB0094F673 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/LibGitIncrementalStore.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/** \"$(SRCROOT)/Libgit₂/include\"";
+			};
+			name = Release;
+		};
 		E8AB5A271770E78A00EE045E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1199,7 +1309,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
@@ -1215,7 +1324,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GitIncrementalStore/GitIncrementalStore-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Snappy\"";
 				INFOPLIST_FILE = "GitIncrementalStore/GitIncrementalStore-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/** \"$(SRCROOT)/Libgit₂/include\"";
@@ -1305,6 +1413,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E81235A61825F4DB0094F673 /* Build configuration list for PBXNativeTarget "LibGitIncrementalStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E81235A21825F4DB0094F673 /* Debug */,
+				E81235A31825F4DB0094F673 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		E8AB59F81770E78A00EE045E /* Build configuration list for PBXProject "GitIncrementalStore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
