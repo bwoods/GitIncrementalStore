@@ -145,6 +145,8 @@
 		E8FB185A18263D6C00C62E1C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E181770F35500EE045E /* libz.dylib */; };
 		E8FB185B18263DFB00C62E1C /* libLibGitIncrementalStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E81235861825F4DA0094F673 /* libLibGitIncrementalStore.a */; };
 		E8FB185E18263E7900C62E1C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8AB5E1D1770F8C800EE045E /* CoreData.framework */; };
+		E8FB18631826DCEF00C62E1C /* DateAsRelativeTimeIntervalValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FB18611826DA6200C62E1C /* DateAsRelativeTimeIntervalValueTransformer.m */; };
+		E8FB18661826DFED00C62E1C /* Base64ValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FB18651826DFED00C62E1C /* Base64ValueTransformer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -440,6 +442,10 @@
 		E8C12E3E17EA3E3300FC9EA4 /* midl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midl.h; sourceTree = "<group>"; };
 		E8CE7FA517DFBA0C001E4AF9 /* lmdb_transactional_backend.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lmdb_transactional_backend.cc; sourceTree = "<group>"; };
 		E8CE7FA817DFE519001E4AF9 /* lmdb_transactional_backend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmdb_transactional_backend.h; sourceTree = "<group>"; };
+		E8FB18601826DA6200C62E1C /* DateAsRelativeTimeIntervalValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateAsRelativeTimeIntervalValueTransformer.h; path = ValueTransformers/DateAsRelativeTimeIntervalValueTransformer.h; sourceTree = "<group>"; };
+		E8FB18611826DA6200C62E1C /* DateAsRelativeTimeIntervalValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAsRelativeTimeIntervalValueTransformer.m; path = ValueTransformers/DateAsRelativeTimeIntervalValueTransformer.m; sourceTree = "<group>"; };
+		E8FB18641826DFED00C62E1C /* Base64ValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base64ValueTransformer.h; path = ValueTransformers/Base64ValueTransformer.h; sourceTree = "<group>"; };
+		E8FB18651826DFED00C62E1C /* Base64ValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Base64ValueTransformer.m; path = ValueTransformers/Base64ValueTransformer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				E8AB5A061770E78A00EE045E /* GitIncrementalStore */,
+				E8FB185F1826D9F200C62E1C /* Example Value Transformers */,
 				E8AB5A1F1770E78A00EE045E /* Unit Tests */,
 				E8AB5A071770E78A00EE045E /* Supporting Files */,
 				E8AB59FF1770E78A00EE045E /* Frameworks */,
@@ -858,6 +865,17 @@
 			path = OpenLDAP/libraries/liblmdb;
 			sourceTree = "<group>";
 		};
+		E8FB185F1826D9F200C62E1C /* Example Value Transformers */ = {
+			isa = PBXGroup;
+			children = (
+				E8FB18601826DA6200C62E1C /* DateAsRelativeTimeIntervalValueTransformer.h */,
+				E8FB18611826DA6200C62E1C /* DateAsRelativeTimeIntervalValueTransformer.m */,
+				E8FB18641826DFED00C62E1C /* Base64ValueTransformer.h */,
+				E8FB18651826DFED00C62E1C /* Base64ValueTransformer.m */,
+			);
+			name = "Example Value Transformers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1008,7 +1026,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8FB18661826DFED00C62E1C /* Base64ValueTransformer.m in Sources */,
 				E8AB5A0D1770E78A00EE045E /* main.m in Sources */,
+				E8FB18631826DCEF00C62E1C /* DateAsRelativeTimeIntervalValueTransformer.m in Sources */,
 				E8FB185918263D1900C62E1C /* ApplicationDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1226,7 +1246,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1258,7 +1278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1345,6 +1365,7 @@
 				DSTROOT = /tmp/Libgit_.dst;
 				EXECUTABLE_PREFIX = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"GIT_THREADS=1",
@@ -1365,6 +1386,7 @@
 				DSTROOT = /tmp/Libgit_.dst;
 				EXECUTABLE_PREFIX = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = "GIT_THREADS=1";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libgit₂/include\"";
 				OTHER_LDFLAGS = "-ObjC";

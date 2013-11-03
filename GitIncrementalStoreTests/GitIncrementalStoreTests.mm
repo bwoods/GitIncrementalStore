@@ -103,12 +103,17 @@
 	XCTAssertNotNil([results.lastObject valueForKey:@"text"], @"Default values are not properly restored: %@", results.lastObject);
 }
 
-- (void) testIncrementalStoreWriteSpeed
+- (void) testIncrementalStoreDatesAsJSON
 {
-	for (int i = 0; i < 2000; ++i)
+	GitIncrementalStore * store = (id) [self.managedObjectContext.persistentStoreCoordinator persistentStoreForURL:self.url];
+	store.useJSON = YES;
+
+	for (int i = 0; i < 2000; ++i) // writing lots of objects so we can measure speed as well
 	{
 		NSManagedObject * object = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleEntity" inManagedObjectContext:self.managedObjectContext];
-		[object setValue:@( arc4random() ) forKey:@"number"];
+
+		// JSON does not store dates natively, so by testing dates we are testing the NSValueTransformer support
+		[object setValue:[NSDate dateWithTimeIntervalSinceReferenceDate:arc4random()] forKey:@"date"];
 	}
 
 	NSError * error = nil;

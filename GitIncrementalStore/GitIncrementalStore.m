@@ -13,6 +13,7 @@
 @interface GitIncrementalStore ( )
 
 @property (strong, nonatomic) NSCache * transformerCache;
+@property (strong, nonatomic) Class entityPersistanceClass;
 @property (assign, nonatomic) git_repository * repository;
 
 @end
@@ -38,6 +39,7 @@ static NSString * emptyCommitMessage, * emptyCommitAuthor, * emptyCommitEmail;
 }
 
 @end
+
 
 @implementation GitCommitChangesRequest
 
@@ -74,6 +76,11 @@ static NSString * emptyCommitMessage, * emptyCommitAuthor, * emptyCommitEmail;
 
 
 @implementation GitIncrementalStore
+
+- (void) setUseJSON:(BOOL)useJSON
+{
+	self.entityPersistanceClass = useJSON ? [NSJSONSerialization class] : [MsgPackSerialization class];
+}
 
 + (NSString *) type
 {
@@ -112,8 +119,10 @@ static inline void throw_if_error(int status)
 			[object.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSAttributeDescription * property, BOOL * stop) {
 				if (property.isTransient == YES)
 					return;
+
+				id value = [object valueForKey:key];
 				if (property.attributeType != NSTransformableAttributeType) {
-					if ([property.defaultValue isEqual:[object valueForKey:key]] == NO)
+					if (value != nil && [property.defaultValue isEqual:value] == NO)
 						dictionary[key] = [object valueForKey:key];
 				}
 				else
@@ -124,10 +133,7 @@ static inline void throw_if_error(int status)
 						[self.transformerCache setObject:transformer forKey:property.valueTransformerName];
 					}
 
-					if ([transformer.class allowsReverseTransformation])
-						dictionary[key] = [transformer reverseTransformedValue:dictionary[key]];
-					else
-						dictionary[key] = [transformer transformedValue:dictionary[key]];
+					dictionary[key] = [transformer transformedValue:value];
 				}
 			}];
 
@@ -149,7 +155,7 @@ static inline void throw_if_error(int status)
 			}];
 
 			// Note: MsgPackSerialization stores dictionaries sorted by key
-			NSData * data = [MsgPackSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+			NSData * data = [self.entityPersistanceClass dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
 			
 			git_index_entry entry = { .mode = GIT_FILEMODE_BLOB, .path = (char *) object.objectID.keyPathRepresentation.UTF8String };
 			throw_if_error(git_blob_create_frombuffer(&entry.oid, self.repository, data.bytes, data.length));
@@ -172,7 +178,7 @@ static inline void throw_if_error(int status)
 	git_commit * parent = nil;
 	git_commit_parent(&parent, commit, 0);
 
-	// only keep user commits (with messages) and the initial repository creation save; over-write autosaves
+	// only keep user commits (with messages) and the initial repository creation save; over-write “just” saves
 	if (parent == nil || strcmp(git_commit_committer(commit)->email, emptyCommitEmail.UTF8String) != NSOrderedSame)
 		parent = commit;
 
@@ -298,13 +304,26 @@ static int fetch_request_treewalk_with_block(const char * prefix, const git_tree
 	git_blob * blob;
 	git_blob_lookup(&blob, self.repository, git_tree_entry_id(entry));
 
-	NSData * data = [[NSData alloc] initWithBytesNoCopy:(void *)git_blob_rawcontent(blob) length:git_blob_rawsize(blob) freeWhenDone:NO];
-	NSMutableDictionary * values = [MsgPackSerialization JSONObjectWithData:data options:0 error:error];
+	NSData * data = [[NSData alloc] initWithBytesNoCopy:(void *)git_blob_rawcontent(blob) length:(NSUInteger)git_blob_rawsize(blob) freeWhenDone:NO];
+	NSMutableDictionary * values = [self.entityPersistanceClass JSONObjectWithData:data options:0 error:error];
 	git_blob_free(blob);
 
-	[objectID.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSAttributeDescription * attribute, BOOL * stop) {
-		if (attribute.defaultValue != nil && [values objectForKey:key] == nil)
-			[values setObject:attribute.defaultValue forKey:key];
+	[objectID.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSAttributeDescription * property, BOOL * stop) {
+		if (property.defaultValue != nil && values[key] == nil)
+			values[key] = property.defaultValue;
+
+		// NSValueTransformer’s transformedValue: is most commonly used to used to store non-scalar types in the persistent store, so reverseTransformedValue: is used (if it exists) to restore the original type
+		if (property.attributeType == NSTransformableAttributeType)
+		{
+			NSValueTransformer * transformer = [self.transformerCache objectForKey:property.valueTransformerName];
+			if (transformer == nil) {
+				transformer = [[NSClassFromString(property.valueTransformerName) alloc] init];
+				[self.transformerCache setObject:transformer forKey:property.valueTransformerName];
+			}
+
+			if ([transformer.class allowsReverseTransformation])
+				values[key] = [transformer reverseTransformedValue:values[key]];
+		}
 	}];
 
 	return [[NSIncrementalStoreNode alloc] initWithObjectID:objectID withValues:values version:0];
@@ -351,7 +370,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 - (void) setMetadata:(NSDictionary *)metadata
 {
 	NSURL * url = [self.URL URLByAppendingPathComponent:NSPersistentStoreMetadataFilename];
-	NSData * data = [MsgPackSerialization dataWithJSONObject:metadata options:NSJSONWritingPrettyPrinted error:nil];
+	NSData * data = [NSPropertyListSerialization dataFromPropertyList:metadata format:NSPropertyListBinaryFormat_v1_0 errorDescription:nil];
 	[data writeToURL:url atomically:YES];
 }
 
@@ -360,7 +379,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 	NSURL * url = [self.URL URLByAppendingPathComponent:NSPersistentStoreMetadataFilename];
 	NSData * data = [[NSData alloc] initWithContentsOfURL:url];
 	if (data != nil)
-		return [MsgPackSerialization JSONObjectWithData:data options:0 error:nil];
+		return [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainers format:nil error:nil];
 
 	CFUUIDRef uuid = CFUUIDCreate(nil);
 	NSString * string = CFBridgingRelease(CFUUIDCreateString(nil, uuid));
@@ -376,6 +395,7 @@ static NSString * NSPersistentStoreMetadataFilename = @"metadata";
 {
 	self = [super initWithPersistentStoreCoordinator:coordinator configurationName:name URL:url options:options];
 	self.transformerCache = [[NSCache alloc] init];
+	self.useJSON = NO;
 
 	emptyCommitMessage = @"Autosave…";
 	emptyCommitAuthor = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
