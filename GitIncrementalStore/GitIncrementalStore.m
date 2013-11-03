@@ -141,7 +141,9 @@ static inline void throw_if_error(int status)
 					for (NSManagedObject * obj in [object valueForKey:key]) // works for NSSet or NSOrderedSet
 						[values addObject:[self referenceObjectForObjectID:obj.objectID]];
 
-					[values sortUsingSelector:@selector(compare:)]; // sort for consistency
+					if (property.isOrdered == NO)
+						[values sortUsingSelector:@selector(compare:)]; // sort for consistency
+
 					dictionary[key] = values;
 				}
 			}];
